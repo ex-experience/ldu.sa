@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#090909">
+  <meta name="description" content="LDU — Entertainment Solutions Company. LDU makes entertainment belong.">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=()">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.googletagmanager.com https://connect.facebook.net https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/; style-src 'self'; img-src 'self' data: https://www.facebook.com; media-src 'self'; connect-src 'self' https://*.supabase.co https://www.google-analytics.com https://analytics.google.com https://www.facebook.com https://www.google.com/recaptcha/; frame-src https://www.google.com/recaptcha/ https://recaptcha.google.com/recaptcha/; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+  <meta property="og:title" content="LDU — Entertainment Solutions Company">
+  <meta property="og:description" content="LDU makes entertainment belong.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="assets/media/hero-poster.jpg">
+  <title>LDU — Entertainment Solutions Company</title>
+  <link rel="icon" type="image/png" href="assets/brand/ibex.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="preload" href="assets/media/hero-poster.jpg" as="image">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="home">
+  <a class="skip-link" href="#main" data-i18n="a11y.skip">Skip to content</a>
+  <div class="progress" id="progress" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="pointer" id="pointer" aria-hidden="true"></div>
+
+  <header class="topbar" id="top">
+    <a class="brand-lockup" href="#top" aria-label="LDU home">
+      <span>LDU</span><img src="assets/brand/ibex.png" alt="" width="28" height="40">
+    </a>
+    <nav class="nav" aria-label="Primary navigation">
+      <a href="#position" data-i18n="nav.position">Position</a>
+      <a href="#method" data-i18n="nav.method">Method</a>
+      <a href="#work" data-i18n="nav.work">Work</a>
+      <a href="#proof" data-i18n="nav.proof">Proof</a>
+      <a href="#contact" data-i18n="nav.contact">Contact</a>
+    </nav>
+    <div class="top-actions">
+      <button class="lang-trigger" id="langTrigger" type="button" aria-expanded="false" aria-controls="langMenu"><span id="langCode">EN</span><span>↗</span></button>
+      <button class="menu-trigger" id="menuTrigger" type="button" aria-expanded="false" aria-controls="mobileNav" data-i18n="nav.menu">Menu</button>
+    </div>
+    <div class="lang-menu" id="langMenu" hidden>
+      <button type="button" data-lang="en">English</button>
+      <button type="button" data-lang="ar">العربية</button>
+      <button type="button" data-lang="fr">Français</button>
+      <button type="button" data-lang="es">Español</button>
+    </div>
+  </header>
+
+  <div class="nav-backdrop" id="navBackdrop" hidden aria-hidden="true"></div>
+  <aside class="mobile-nav" id="mobileNav" hidden aria-label="Mobile navigation" aria-modal="true" role="dialog">
+    <div class="mobile-nav-head">
+      <a class="mobile-nav-brand" href="#top" aria-label="LDU home"><span>LDU</span><img src="assets/brand/ibex.png" alt="" width="28" height="40"></a>
+      <button class="mobile-nav-close" id="mobileNavClose" type="button" aria-label="Close menu">×</button>
+    </div>
+    <nav class="mobile-nav-links" aria-label="Mobile primary navigation">
+      <a href="#position"><span>01</span><b data-i18n="nav.position">Position</b></a>
+      <a href="#method"><span>02</span><b data-i18n="nav.method">Method</b></a>
+      <a href="#work"><span>03</span><b data-i18n="nav.work">Work</b></a>
+      <a href="#services"><span>04</span><b data-i18n="nav.services">What we do</b></a>
+      <a href="#proof"><span>05</span><b data-i18n="nav.proof">Proof</b></a>
+      <a href="#team"><span>06</span><b data-i18n="nav.team">Who we are</b></a>
+      <a href="#contact"><span>07</span><b data-i18n="nav.contact">Contact</b></a>
+    </nav>
+    <div class="mobile-nav-foot"><span>RIYADH · SAUDI ARABIA</span><span>ENTERTAINMENT SOLUTIONS COMPANY</span></div>
+  </aside>
+
+  <main id="main">
+    <section class="hero stage" data-tone="dark" aria-labelledby="heroTitle">
+      <video class="hero-media" autoplay muted loop playsinline preload="metadata" poster="assets/media/hero-poster.jpg" aria-hidden="true">
+        <source src="assets/media/hero-reel.mp4" type="video/mp4">
+      </video>
+      <div class="hero-shade" aria-hidden="true"></div>
+      <div class="hero-gridline" aria-hidden="true"></div>
+      <div class="hero-content">
+        <p class="hero-meta" data-i18n="hero.meta">ENTERTAINMENT SOLUTIONS COMPANY · RIYADH</p>
+        <h1 id="heroTitle" class="hero-title" data-kinetic>
+          <span data-i18n="hero.l1">LDU makes</span>
+          <span data-i18n="hero.l2">entertainment</span>
+          <span class="accent" data-i18n="hero.l3">belong.</span>
+        </h1>
+        <div class="hero-purpose reveal">
+          <span data-i18n="hero.purposeLabel">PURPOSE / 01</span>
+          <p data-i18n="hero.purpose">Humanize entertainment. Design for the person attending, not the person approving.</p>
+        </div>
+        <div class="hero-cta reveal">
+          <a class="button button-fill magnetic" href="#method" data-i18n="hero.ctaMethod">Enter the method</a>
+          <a class="button button-line magnetic" href="#proof" data-i18n="hero.ctaProof">See the proof</a>
+        </div>
+      </div>
+      <aside class="hero-rail" aria-label="Brand principles">
+        <span data-i18n="hero.rail1">CULTURE IS THE CODE</span>
+        <span>24°42'N · 46°43'E</span>
+        <img src="assets/brand/ibex.png" alt="LDU ibex" width="44" height="63">
+      </aside>
+      <div class="scroll-cue" aria-hidden="true"><span>SCROLL</span><i></i></div>
+    </section>
+
+    <section class="marquee" aria-label="LDU operating line">
+      <div class="marquee-track">
+        <span data-i18n="marquee.q">ASK THE UNCOMFORTABLE QUESTION</span><b>◆</b>
+        <span data-i18n="marquee.r">REFRAME THE OPPORTUNITY</span><b>◆</b>
+        <span data-i18n="marquee.h">ROOT IT IN CULTURE</span><b>◆</b>
+        <span data-i18n="marquee.c">CONNECT THE PEOPLE</span><b>◆</b>
+        <span data-i18n="marquee.s">BUILD THE STAGE</span><b>◆</b>
+        <span data-i18n="marquee.q">ASK THE UNCOMFORTABLE QUESTION</span><b>◆</b>
+        <span data-i18n="marquee.r">REFRAME THE OPPORTUNITY</span><b>◆</b>
+        <span data-i18n="marquee.h">ROOT IT IN CULTURE</span><b>◆</b>
+      </div>
+    </section>
+
+    <section class="position section section-cream" id="position" data-tone="cream" aria-labelledby="positionTitle">
+      <div class="section-kicker"><span>02</span><span data-i18n="position.kicker">POSITION</span></div>
+      <div class="position-copy">
+        <h2 id="positionTitle" class="display reveal" data-i18n="position.title">Entertainment can arrive from outside. It can be built from inside. Neither belongs automatically.</h2>
+        <p class="lead reveal" data-i18n="position.body">LDU works at that seam: between brands, institutions, entertainment properties, talent and audiences. We challenge the brief, uncover the more valuable opportunity underneath it, tune it to the culture it must live in, connect the people who can make it real, then shape the story and the stage through which it reaches the world.</p>
+      </div>
+      <div class="position-mark reveal-scale" aria-hidden="true">
+        <img src="assets/brand/ibex-source.png" alt="" width="620" height="880">
+      </div>
+    </section>
+
+    <section class="questions section section-black" data-tone="dark" aria-labelledby="questionsTitle">
+      <div class="section-kicker inverse"><span>03</span><span data-i18n="questions.kicker">THE UNCOMFORTABLE QUESTIONS</span></div>
+      <div class="questions-intro">
+        <h2 id="questionsTitle" class="display reveal" data-i18n="questions.title">The questions are not a warm-up to the work. They frequently are the work.</h2>
+      </div>
+      <div class="question-grid">
+        <article class="question-card reveal"><span>01</span><h3 data-i18n="questions.q1">What is this actually for?</h3><p data-i18n="questions.a1">A real objective, or a budget with a deadline attached?</p></article>
+        <article class="question-card reveal"><span>02</span><h3 data-i18n="questions.q2">Who is it for, and what do they leave with?</h3><p data-i18n="questions.a2">An audience, or only a target number?</p></article>
+        <article class="question-card reveal"><span>03</span><h3 data-i18n="questions.q3">Does it belong here, or was it just brought here?</h3><p data-i18n="questions.a3">Culture coded in, or applied later as decoration?</p></article>
+        <article class="question-card reveal"><span>04</span><h3 data-i18n="questions.q4">What survives after they leave?</h3><p data-i18n="questions.a4">Something durable, or something that ends when the lights go off?</p></article>
+      </div>
+    </section>
+
+    <section class="reel section section-navy" id="work" data-tone="navy" aria-labelledby="reelTitle">
+      <div class="reel-copy">
+        <div class="section-kicker inverse"><span>04</span><span data-i18n="reel.kicker">THE SITE IS A STAGE</span></div>
+        <h2 id="reelTitle" class="display reveal" data-i18n="reel.title">Not a document. A living frame for story, motion and proof.</h2>
+        <p class="lead reveal" data-i18n="reel.body">This reel is built from LDU’s own identity and portfolio materials. Source archives stay private; only approved, optimized web assets enter the public experience.</p>
+      </div>
+      <figure class="reel-frame reveal-scale">
+        <video autoplay muted loop playsinline preload="metadata" poster="assets/media/reel-poster.jpg" aria-label="LDU motion identity reel">
+          <source src="assets/media/proof-reel.mp4" type="video/mp4">
+        </video>
+        <figcaption><span data-i18n="reel.caption1">LDU MOTION IDENTITY</span><span data-i18n="reel.caption2">LOCAL ASSETS · NO PUBLIC DRIVE EMBEDS</span></figcaption>
+      </figure>
+    </section>
+
+    <section class="method section section-cream" id="method" data-tone="cream" aria-labelledby="methodTitle">
+      <div class="section-kicker"><span>05</span><span data-i18n="method.kicker">THE LDU METHOD</span></div>
+      <div class="method-head">
+        <h2 id="methodTitle" class="display reveal" data-i18n="method.title">Story + Stage.</h2>
+        <p class="lead reveal" data-i18n="method.intro">The story is the meaning: why people should care. The stage is the environment where that meaning becomes real.</p>
+      </div>
+      <div class="story-stage">
+        <article class="story-panel reveal"><span>STORY</span><h3 data-i18n="method.storyTitle">Meaning.</h3><p data-i18n="method.storyBody">What is the idea really saying, and why should anyone care?</p></article>
+        <article class="stage-panel reveal"><span>STAGE</span><h3 data-i18n="method.stageTitle">Environment.</h3><p data-i18n="method.stageBody">Where, how and through whom that meaning becomes tangible.</p></article>
+      </div>
+      <blockquote class="method-quote reveal" data-i18n="method.quote">An event without a story is just an expensive room.</blockquote>
+      <div class="method-flow">
+        <article class="method-step reveal"><span>01</span><h3 data-i18n="method.reframe">Reframe</h3><p data-i18n="method.reframeBody">Challenge the brief. Define the opportunity actually worth solving.</p></article>
+        <article class="method-step reveal"><span>02</span><h3 data-i18n="method.harmonize">Harmonize</h3><p data-i18n="method.harmonizeBody">Code it to the culture. Decide what belongs, what needs translating and what should be refused.</p></article>
+        <article class="method-step reveal"><span>03</span><h3 data-i18n="method.connect">Connect</h3><p data-i18n="method.connectBody">Assemble brands, institutions, talent, partners and operators that can make it real.</p></article>
+        <article class="method-step reveal"><span>04</span><h3 data-i18n="method.build">Build</h3><p data-i18n="method.buildBody">Shape the story and the stage, then protect the idea through delivery.</p></article>
+      </div>
+    </section>
+
+    <section class="services section section-black" id="services" data-tone="dark" aria-labelledby="servicesTitle">
+      <div class="section-kicker inverse"><span>06</span><span data-i18n="services.kicker">WHAT WE SELL</span></div>
+      <div class="services-head">
+        <h2 id="servicesTitle" class="display reveal" data-i18n="services.title">Three territories. One continuous team.</h2>
+        <p class="lead reveal" data-i18n="services.body">We sell solved problems, not a stack of deliverables.</p>
+      </div>
+      <div class="territories">
+        <article class="territory-card reveal"><span>01</span><h3 data-i18n="services.advisory">Advisory</h3><p data-i18n="services.advisoryBody">Strategy, market entry, cultural intelligence, positioning and reframing.</p></article>
+        <article class="territory-card reveal"><span>02</span><h3 data-i18n="services.partnerships">Partnerships</h3><p data-i18n="services.partnershipsBody">Finding, structuring and closing relationships between brands, properties, institutions and talent.</p></article>
+        <article class="territory-card reveal"><span>03</span><h3 data-i18n="services.orchestration">Orchestration</h3><p data-i18n="services.orchestrationBody">Owning strategic coherence and delivery across multiple parties, vendors and workstreams.</p></article>
+      </div>
+      <div class="capability-list">
+        <article><span>01</span><h3 data-i18n="cap.c1">Creative Event Concept & Design</h3><p data-i18n="cap.c1b">Storytelling, cultural depth and audience journey design.</p></article>
+        <article><span>02</span><h3 data-i18n="cap.c2">Event Production & Entertainment</h3><p data-i18n="cap.c2b">From a ballroom to the desert: production, talent, logistics and show flow.</p></article>
+        <article><span>03</span><h3 data-i18n="cap.c3">Social Media Management</h3><p data-i18n="cap.c3b">Content, community and growth strategy tied to the brand.</p></article>
+        <article><span>04</span><h3 data-i18n="cap.c4">Consultancy & Saudi Market Strategy</h3><p data-i18n="cap.c4b">Positioning, market insight and cultural fit for the Kingdom.</p></article>
+        <article><span>05</span><h3 data-i18n="cap.c5">Strategic Communications & PR</h3><p data-i18n="cap.c5b">Media, executive positioning, partnerships and reputation.</p></article>
+      </div>
+    </section>
+
+    <section class="proof section section-warm" id="proof" data-tone="warm" aria-labelledby="proofTitle">
+      <div class="section-kicker"><span>07</span><span data-i18n="proof.kicker">OUR PROOF</span></div>
+      <div class="proof-head">
+        <h2 id="proofTitle" class="display reveal" data-i18n="proof.title">Impact over attendance.</h2>
+        <p class="lead reveal" data-i18n="proof.body">A logo wall says we were in the room. It does not say what changed. LDU measures the change.</p>
+      </div>
+      <div class="proof-metrics">
+        <article class="reveal"><span>01 / BELONGING</span><p data-i18n="proof.p1">The work reads as native to its context rather than imported or translated.</p></article>
+        <article class="reveal"><span>02 / CONNECTION</span><p data-i18n="proof.p2">A partnership exists that would not have existed without the right connection.</p></article>
+        <article class="reveal"><span>03 / COMMERCIAL</span><p data-i18n="proof.p3">Revenue, sponsorship, market access or savings can be pointed at.</p></article>
+        <article class="reveal"><span>04 / HUMAN</span><p data-i18n="proof.p4">People participated, returned, shared or stayed because it resonated.</p></article>
+      </div>
+
+      <div class="case-intro">
+        <div><p class="mini" data-i18n="cases.kicker">FOUNDER-LED CASE STUDIES</p><h3 data-i18n="cases.title">The work, with attribution intact.</h3></div>
+        <p data-i18n="cases.note">Selected credentials below were delivered by the founders at previous companies. They are not presented as LDU client work.</p>
+      </div>
+      <div class="case-grid">
+        <a class="case-card magnetic reveal" href="case-studies/netflix/">
+          <img src="assets/case/netflix.jpg" alt="Netflix founder-led case study editorial card" loading="lazy">
+          <span class="case-meta">01 · FOUNDER-LED</span><h4>Netflix</h4><p data-i18n="cases.netflix">Squid Game · The Irishman — global property, local execution.</p><b data-i18n="cases.open">Open case ↗</b>
+        </a>
+        <a class="case-card magnetic reveal" href="case-studies/pepsi-doritos/">
+          <img src="assets/case/pepsi-doritos.jpg" alt="Pepsi and Doritos founder-led case study editorial card" loading="lazy">
+          <span class="case-meta">02 · FOUNDER-LED</span><h4>Pepsi / Doritos</h4><p data-i18n="cases.pepsi">Brand partnership translated into live culture.</p><b data-i18n="cases.open">Open case ↗</b>
+        </a>
+        <a class="case-card magnetic reveal" href="case-studies/jeddah-season/">
+          <img src="assets/case/jeddah-season.jpg" alt="Jeddah Season founder-led case study editorial card" loading="lazy">
+          <span class="case-meta">03 · FOUNDER-LED</span><h4>Jeddah Season</h4><p data-i18n="cases.jeddah">Marketing leadership across a national seasonal program.</p><b data-i18n="cases.open">Open case ↗</b>
+        </a>
+        <a class="case-card magnetic reveal" href="case-studies/mdlbeast/">
+          <img src="assets/case/mdlbeast.jpg" alt="MDLBEAST founder-led case study editorial card" loading="lazy">
+          <span class="case-meta">04 · FOUNDER-LED</span><h4>MDLBEAST</h4><p data-i18n="cases.mdl">Talent, content and experience at scale.</p><b data-i18n="cases.open">Open case ↗</b>
+        </a>
+      </div>
+    </section>
+
+    <section class="team section section-cream" id="team" data-tone="cream" aria-labelledby="teamTitle">
+      <div class="section-kicker"><span>08</span><span data-i18n="team.kicker">WHO WE ARE</span></div>
+      <div class="team-head">
+        <h2 id="teamTitle" class="display reveal" data-i18n="team.title">Saudi by instinct. Global by experience.</h2>
+        <p class="lead reveal" data-i18n="team.body">A young Saudi team with international knowledge and experience, working across entertainment, picture and sound.</p>
+      </div>
+      <div class="identity-strip">
+        <article class="reveal"><span>A</span><h3 data-i18n="team.heritage">Heritage</h3><p data-i18n="team.heritageBody">Timeless roots that define us.</p></article>
+        <article class="reveal"><span>B</span><h3 data-i18n="team.culture">Culture</h3><p data-i18n="team.cultureBody">Morals and arts speak in every detail.</p></article>
+        <article class="reveal"><span>C</span><h3 data-i18n="team.vision">Vision</h3><p data-i18n="team.visionBody">Give the world a real taste of Saudi unity.</p></article>
+      </div>
+      <div class="founders">
+        <article class="founder-card reveal"><div class="founder-index">01</div><div><span data-i18n="team.deemaLane">COMMERCIAL / EXTERNAL</span><h3>Deema Alwaala</h3><p class="role" data-i18n="team.deemaRole">Founder & CEO</p><p data-i18n="team.deemaBody">Builds partnerships, closes deals and leads commercial relationships.</p><div class="chips"><span>MDLBEAST</span><span>Pepsi</span><span>Rotana</span></div></div></article>
+        <article class="founder-card reveal"><div class="founder-index">02</div><div><span data-i18n="team.emranLane">CULTURE / OPERATIONS</span><h3>Emran Arif</h3><p class="role" data-i18n="team.emranRole">Co-Founder · Operations</p><p data-i18n="team.emranBody">Leads cultural strategy, concept innovation and audience journey design.</p><div class="chips"><span>Netflix</span><span>Jeddah Season</span><span>LEVELUP</span></div></div></article>
+      </div>
+    </section>
+
+    <section class="contact section section-navy" id="contact" data-tone="navy" aria-labelledby="contactTitle">
+      <div class="section-kicker inverse"><span>09</span><span data-i18n="contact.kicker">PROJECT INTAKE</span></div>
+      <div class="contact-head">
+        <h2 id="contactTitle" class="display reveal" data-i18n="contact.title">Bring the brief. We’ll ask the uncomfortable question.</h2>
+        <p class="lead reveal" data-i18n="contact.body">A structured intake helps us qualify the project before a meeting — objective, market, budget, timeline and what success must change.</p>
+      </div>
+      <div class="contact-layout">
+        <form id="leadForm" class="lead-form" novalidate>
+          <input type="text" name="website" class="honeypot" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <input type="hidden" name="lead_score" id="leadScore" value="0">
+          <input type="hidden" name="language" id="formLanguage" value="en">
+          <div class="form-grid">
+            <label><span data-i18n="form.name">Name</span><input name="name" autocomplete="name" required maxlength="100"></label>
+            <label><span data-i18n="form.company">Company / Entity</span><input name="company" autocomplete="organization" maxlength="140"></label>
+            <label><span data-i18n="form.role">Role</span><input name="role" autocomplete="organization-title" maxlength="120"></label>
+            <label><span data-i18n="form.email">Work email</span><input name="email" type="email" autocomplete="email" required maxlength="160"></label>
+            <label><span data-i18n="form.market">Primary market</span><select name="market" required><option value="" data-i18n="form.choose">Choose</option><option value="Saudi Arabia" data-i18n="form.marketSaudi">Saudi Arabia</option><option value="GCC" data-i18n="form.marketGcc">GCC</option><option value="MENA" data-i18n="form.marketMena">MENA</option><option value="International" data-i18n="form.marketIntl">International</option></select></label>
+            <label><span data-i18n="form.projectType">Project territory</span><select name="project_type" required><option value="" data-i18n="form.choose">Choose</option><option value="partnerships" data-i18n="form.typePartnerships">Partnerships</option><option value="advisory" data-i18n="form.typeAdvisory">Advisory</option><option value="orchestration" data-i18n="form.typeOrchestration">Orchestration</option><option value="experience" data-i18n="form.typeExperience">Experience / Event</option><option value="other" data-i18n="form.typeOther">Other</option></select></label>
+            <label><span data-i18n="form.budget">Indicative budget</span><select name="budget" required><option value="" data-i18n="form.choose">Choose</option><option value="under100" data-i18n="form.budget1">Under SAR 100k</option><option value="100-500" data-i18n="form.budget2">SAR 100k–500k</option><option value="500-1500" data-i18n="form.budget3">SAR 500k–1.5m</option><option value="1500plus" data-i18n="form.budget4">SAR 1.5m+</option><option value="undisclosed" data-i18n="form.budget5">Undisclosed</option></select></label>
+            <label><span data-i18n="form.timeline">Target timeline</span><select name="timeline" required><option value="" data-i18n="form.choose">Choose</option><option value="lt30" data-i18n="form.time1">Under 30 days</option><option value="30-90" data-i18n="form.time2">30–90 days</option><option value="90-180" data-i18n="form.time3">3–6 months</option><option value="180plus" data-i18n="form.time4">6+ months</option></select></label>
+            <label class="full"><span data-i18n="form.objective">What is this actually for?</span><textarea name="objective" rows="4" required maxlength="1400" data-i18n-placeholder="form.objectivePh" placeholder="Describe the real objective, audience and what should change after the experience."></textarea></label>
+            <label class="full"><span data-i18n="form.context">What already exists?</span><textarea name="context" rows="3" maxlength="1000" data-i18n-placeholder="form.contextPh" placeholder="Existing concept, IP, venue, partners, approvals or constraints."></textarea></label>
+          </div>
+          <label class="consent-row"><input type="checkbox" name="privacy_consent" required><span data-i18n="form.consent">I have read the privacy notice and consent to LDU processing the information I submit to assess and respond to this inquiry.</span></label>
+          <div class="fit-meter" aria-live="polite"><span data-i18n="form.fitLabel">PROJECT FIT SIGNAL</span><strong id="fitSignal">—</strong><i><em id="fitBar"></em></i></div>
+          <div class="form-actions">
+            <button class="button button-fill magnetic" type="submit" data-i18n="form.submit">Submit secure intake</button>
+            <p id="formStatus" class="form-status" aria-live="polite"></p>
+          </div>
+        </form>
+        <aside class="contact-direct reveal">
+          <div class="direct-block"><span data-i18n="contact.locationLabel">LOCATION</span><strong data-i18n="contact.location">Riyadh, Saudi Arabia</strong></div>
+          <div class="direct-block"><span data-i18n="contact.phoneLabel">DIRECT LINE</span><button type="button" class="direct-phone magnetic" id="callButton" data-phone="+966540211883">+966 54 021 1883</button><small id="callStatus" aria-live="polite"></small></div>
+          <div class="direct-block"><span>INSTAGRAM</span><a href="https://www.instagram.com/ladeeunique" target="_blank" rel="noopener noreferrer">@Ladeeunique ↗</a></div>
+          <div class="privacy-note"><span>PDPL / PRIVACY</span><p data-i18n="contact.privacy">No public Drive folders. No visible email address. Analytics load only after consent. Inquiry data is sent only to the configured secure intake endpoint.</p></div>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-brand"><strong>LDU</strong><img src="assets/brand/ibex.png" alt="" width="34" height="48"><span data-i18n="footer.line">Ask the uncomfortable question. Make the answer belong.</span></div>
+    <div class="footer-links"><a href="privacy/" data-i18n="footer.privacy">Privacy</a><a href="terms/" data-i18n="footer.terms">Terms</a><button type="button" id="privacySettings" data-i18n="footer.cookies">Privacy settings</button></div>
+    <div class="footer-meta"><span>© <span id="year"></span> LDU</span><span data-i18n="footer.location">RIYADH · SAUDI ARABIA</span></div>
+  </footer>
+
+  <section class="consent-banner" id="consentBanner" hidden aria-label="Analytics consent">
+    <div><strong data-i18n="consent.title">Your data. Your choice.</strong><p data-i18n="consent.body">We use optional analytics only if you allow it. Necessary site functions work without analytics.</p><a href="privacy/" data-i18n="consent.learn">Privacy notice</a></div>
+    <div class="consent-actions"><button type="button" class="button button-line" id="consentReject" data-i18n="consent.reject">Necessary only</button><button type="button" class="button button-fill" id="consentAccept" data-i18n="consent.accept">Allow analytics</button></div>
+  </section>
+
+  <script src="site-config.js"></script>
+  <script src="i18n.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
