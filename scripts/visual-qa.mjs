@@ -26,11 +26,11 @@ async function activateAllReveals(page, name) {
   for (let i = 0; i < count; i += 1) {
     const item = reveals.nth(i);
     await item.scrollIntoViewIfNeeded();
-    await page.waitForTimeout(90);
+    await page.waitForTimeout(70);
   }
 
   await page.evaluate(() => window.scrollTo(0, 0));
-  await page.waitForTimeout(160);
+  await page.waitForTimeout(140);
 
   const hidden = await page.locator("[data-reveal]:not(.is-visible)").count();
   if (hidden !== 0) {
@@ -38,14 +38,94 @@ async function activateAllReveals(page, name) {
   }
 }
 
-async function screenshotMain({ name, width, height, lang }) {
+async function auditResponsive(page, name, width) {
+  const audit = await page.evaluate(() => {
+    const root = document.documentElement;
+    const overflow = root.scrollWidth - root.clientWidth;
+
+    const headingOffenders = [...document.querySelectorAll("h1,h2,h3")]
+      .map((node) => {
+        const r = node.getBoundingClientRect();
+        return {
+          text: (node.textContent || "").trim().slice(0, 80),
+          left: r.left,
+          right: r.right,
+          width: r.width
+        };
+      })
+      .filter((x) => x.left < -2 || x.right > window.innerWidth + 2)
+      .slice(0, 8);
+
+    const brokenImages = [...document.images]
+      .filter((img) => !img.complete || img.naturalWidth === 0)
+      .map((img) => img.currentSrc || img.src)
+      .slice(0, 8);
+
+    const touchSelectors = [
+      ".pill-button",
+      ".button",
+      ".mobile-menu-button",
+      ".brand-button"
+    ];
+
+    const smallTargets = [...document.querySelectorAll(touchSelectors.join(","))]
+      .map((node) => {
+        const r = node.getBoundingClientRect();
+        return {
+          label: (node.textContent || node.getAttribute("aria-label") || "").trim(),
+          width: r.width,
+          height: r.height
+        };
+      })
+      .filter((x) => x.width < 44 || x.height < 44)
+      .slice(0, 8);
+
+    return {
+      overflow,
+      clientWidth: root.clientWidth,
+      scrollWidth: root.scrollWidth,
+      headingOffenders,
+      brokenImages,
+      smallTargets
+    };
+  });
+
+  if (audit.overflow > 2) {
+    throw new Error(
+      `${name}: horizontal page overflow (${audit.scrollWidth}px > ${audit.clientWidth}px)`
+    );
+  }
+
+  if (width <= 820 && audit.headingOffenders.length) {
+    throw new Error(
+      `${name}: heading overflow: ${JSON.stringify(audit.headingOffenders)}`
+    );
+  }
+
+  if (audit.brokenImages.length) {
+    throw new Error(
+      `${name}: broken image(s): ${audit.brokenImages.join(", ")}`
+    );
+  }
+
+  if (width <= 1024 && audit.smallTargets.length) {
+    throw new Error(
+      `${name}: touch target(s) below 44px: ${JSON.stringify(audit.smallTargets)}`
+    );
+  }
+}
+
+async function screenshotMain({ name, width, height, lang, mobile = false }) {
   const page = await browser.newPage({
     viewport: { width, height },
-    deviceScaleFactor: 1
+    deviceScaleFactor: 1,
+    isMobile: mobile,
+    hasTouch: mobile || width <= 1024
   });
 
   await setLanguage(page, base, lang);
   await activateAllReveals(page, name);
+  await auditResponsive(page, name, width);
 
   await page.screenshot({
     path: `${out}/${name}.png`,
@@ -61,8 +141,15 @@ const mainCaptures = [
   { name: "desktop-ar", width: 1440, height: 1000, lang: "ar" },
   { name: "desktop-fr", width: 1440, height: 1000, lang: "fr" },
   { name: "desktop-es", width: 1440, height: 1000, lang: "es" },
-  { name: "mobile-en", width: 390, height: 844, lang: "en" },
-  { name: "mobile-ar", width: 390, height: 844, lang: "ar" }
+
+  { name: "mobile-360-en", width: 360, height: 800, lang: "en", mobile: true },
+  { name: "mobile-390-ar", width: 390, height: 844, lang: "ar", mobile: true },
+  { name: "mobile-430-en", width: 430, height: 932, lang: "en", mobile: true },
+  { name: "mobile-512-en", width: 512, height: 888, lang: "en", mobile: true },
+
+  { name: "tablet-768-en", width: 768, height: 1024, lang: "en", mobile: true },
+  { name: "tablet-768-ar", width: 768, height: 1024, lang: "ar", mobile: true },
+  { name: "tablet-1024-en", width: 1024, height: 768, lang: "en" }
 ];
 
 for (const capture of mainCaptures) {
@@ -72,12 +159,15 @@ for (const capture of mainCaptures) {
 for (const lang of ["en", "ar"]) {
   const page = await browser.newPage({
     viewport: { width: 390, height: 844 },
-    deviceScaleFactor: 1
+    deviceScaleFactor: 1,
+    isMobile: true,
+    hasTouch: true
   });
 
   await setLanguage(page, base, lang);
   await page.locator(".mobile-menu-button").click();
   await page.waitForTimeout(120);
+  await auditResponsive(page, `mobile-${lang}-menu`, 390);
 
   await page.screenshot({
     path: `${out}/mobile-${lang}-menu.png`,
@@ -96,6 +186,7 @@ for (const [lang, legal] of [["en", "privacy"], ["ar", "terms"]]) {
 
   const target = `${base}?legal=${legal}`;
   await setLanguage(page, target, lang);
+  await auditResponsive(page, `legal-${lang}-${legal}`, 1440);
 
   await page.screenshot({
     path: `${out}/legal-${lang}-${legal}.png`,
@@ -107,4 +198,4 @@ for (const [lang, legal] of [["en", "privacy"], ["ar", "terms"]]) {
 }
 
 await browser.close();
-console.log("Visual QA passed: 10 validated screenshots saved.");
+console.log("Responsive visual QA passed: 15 screenshots, no page overflow, no broken images, and touch targets validated.");
