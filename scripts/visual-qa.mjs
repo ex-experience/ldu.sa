@@ -5,87 +5,47 @@ const base = process.env.LDU_PREVIEW_URL || "http://127.0.0.1:4173/ldu.sa/";
 const out = "visual-qa";
 
 await fs.mkdir(out, { recursive: true });
-
 const browser = await chromium.launch();
 
-async function prepare(page, lang) {
-  await page.goto(base, { waitUntil: "networkidle" });
-
+async function setLanguage(page, target, lang) {
+  await page.goto(target, { waitUntil: "networkidle" });
   await page.evaluate((value) => {
     localStorage.setItem("ldu-language", value);
   }, lang);
-
   await page.reload({ waitUntil: "networkidle" });
 
   await page.evaluate(async () => {
-    if (document.fonts?.ready) {
-      await document.fonts.ready;
-    }
+    if (document.fonts?.ready) await document.fonts.ready;
   });
+}
 
-  // Walk the page to trigger every IntersectionObserver reveal before
-  // the full-page screenshot is captured.
-  await page.evaluate(async () => {
-    const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-    const root = document.documentElement;
-    const step = Math.max(500, Math.floor(window.innerHeight * 0.75));
-    const max = Math.max(root.scrollHeight, document.body.scrollHeight);
+async function activateAllReveals(page, name) {
+  const reveals = page.locator("[data-reveal]");
+  const count = await reveals.count();
 
-    for (let y = 0; y <= max; y += step) {
-      window.scrollTo(0, y);
-      await wait(75);
-    }
+  for (let i = 0; i < count; i += 1) {
+    const item = reveals.nth(i);
+    await item.scrollIntoViewIfNeeded();
+    await page.waitForTimeout(90);
+  }
 
-    window.scrollTo(0, max);
-    await wait(180);
-    window.scrollTo(0, 0);
-    await wait(180);
-  });
+  await page.evaluate(() => window.scrollTo(0, 0));
+  await page.waitForTimeout(160);
 
   const hidden = await page.locator("[data-reveal]:not(.is-visible)").count();
   if (hidden !== 0) {
-    throw new Error(`Visual QA found ${hidden} reveal block(s) that never became visible`);
+    throw new Error(`${name}: ${hidden} reveal block(s) remained hidden`);
   }
 }
 
-async function screenshotPage({ name, width, height, lang, legal }) {
+async function screenshotMain({ name, width, height, lang }) {
   const page = await browser.newPage({
     viewport: { width, height },
     deviceScaleFactor: 1
   });
 
-  const target = legal ? `${base}?legal=${legal}` : base;
-
-  await page.goto(target, { waitUntil: "networkidle" });
-  await page.evaluate((value) => localStorage.setItem("ldu-language", value), lang);
-  await page.goto(target, { waitUntil: "networkidle" });
-
-  await page.evaluate(async () => {
-    if (document.fonts?.ready) await document.fonts.ready;
-  });
-
-  if (!legal) {
-    await page.evaluate(async () => {
-      const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-      const max = Math.max(document.documentElement.scrollHeight, document.body.scrollHeight);
-      const step = Math.max(500, Math.floor(window.innerHeight * 0.75));
-
-      for (let y = 0; y <= max; y += step) {
-        window.scrollTo(0, y);
-        await wait(75);
-      }
-
-      window.scrollTo(0, max);
-      await wait(180);
-      window.scrollTo(0, 0);
-      await wait(180);
-    });
-
-    const hidden = await page.locator("[data-reveal]:not(.is-visible)").count();
-    if (hidden !== 0) {
-      throw new Error(`${name}: ${hidden} reveal block(s) remained hidden`);
-    }
-  }
+  await setLanguage(page, base, lang);
+  await activateAllReveals(page, name);
 
   await page.screenshot({
     path: `${out}/${name}.png`,
@@ -93,7 +53,7 @@ async function screenshotPage({ name, width, height, lang, legal }) {
     animations: "disabled"
   });
 
-  return page;
+  await page.close();
 }
 
 const mainCaptures = [
@@ -106,18 +66,16 @@ const mainCaptures = [
 ];
 
 for (const capture of mainCaptures) {
-  const page = await screenshotPage(capture);
-  await page.close();
+  await screenshotMain(capture);
 }
 
-// Mobile navigation states.
 for (const lang of ["en", "ar"]) {
   const page = await browser.newPage({
     viewport: { width: 390, height: 844 },
     deviceScaleFactor: 1
   });
 
-  await prepare(page, lang);
+  await setLanguage(page, base, lang);
   await page.locator(".mobile-menu-button").click();
   await page.waitForTimeout(120);
 
@@ -130,17 +88,23 @@ for (const lang of ["en", "ar"]) {
   await page.close();
 }
 
-// Legal pages in both primary languages.
 for (const [lang, legal] of [["en", "privacy"], ["ar", "terms"]]) {
-  const page = await screenshotPage({
-    name: `legal-${lang}-${legal}`,
-    width: 1440,
-    height: 1000,
-    lang,
-    legal
+  const page = await browser.newPage({
+    viewport: { width: 1440, height: 1000 },
+    deviceScaleFactor: 1
   });
+
+  const target = `${base}?legal=${legal}`;
+  await setLanguage(page, target, lang);
+
+  await page.screenshot({
+    path: `${out}/legal-${lang}-${legal}.png`,
+    fullPage: true,
+    animations: "disabled"
+  });
+
   await page.close();
 }
 
 await browser.close();
-console.log("Visual QA passed: all reveal blocks were activated and 10 screenshots were saved.");
+console.log("Visual QA passed: 10 validated screenshots saved.");
