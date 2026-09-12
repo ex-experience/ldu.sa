@@ -50,14 +50,26 @@ if (css.toLowerCase().includes("</style")) {
   throw new Error("Inline CSS unexpectedly contains a closing style tag");
 }
 
+// IMPORTANT: use function replacers.
+// The minified React bundle contains replacement tokens such as $&.
+// Passing the whole JS bundle as a normal String.replace replacement string
+// would expand those tokens and inject the original script tag into the bundle.
 html = html
-  .replace(cssMatch[0], `<style>${css}</style>`)
-  .replace(jsMatch[0], `<script type="module">${js}</script>`)
+  .replace(cssMatch[0], () => `<style>${css}</style>`)
+  .replace(jsMatch[0], () => `<script type="module">${js}</script>`)
   .replaceAll("/ldu.sa/favicon.svg", `${repo}/docs/favicon.svg`)
   .replaceAll("/ldu.sa/og.jpg", `${repo}/docs/og.jpg`);
 
-if (html.includes("/ldu.sa/assets/")) {
-  throw new Error("Preview still contains unresolved /ldu.sa/assets references");
+const unresolved = [...html.matchAll(/\/ldu\.sa\/assets\/[^"' )<]+/g)].map((m) => m[0]);
+
+if (unresolved.length) {
+  throw new Error(
+    `Preview still contains unresolved asset references: ${[...new Set(unresolved)].join(", ")}`
+  );
+}
+
+if (html.includes('src="/ldu.sa/') || html.includes('href="/ldu.sa/')) {
+  throw new Error("Preview still contains unresolved /ldu.sa/ document references");
 }
 
 await fs.writeFile(path.join(outDir, "index.html"), html, "utf8");
