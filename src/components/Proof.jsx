@@ -1,17 +1,26 @@
-﻿import React from "react";
-import { content } from "../data/content";
-import arena from "../../docs/media/case-arena.jpg";
-import horizon from "../../docs/media/case-horizon.jpg";
+import React from "react";
+import { useI18n } from "../i18n/I18nContext";
+
+const proof = [1, 2, 3, 4];
 
 export default function Proof() {
+  const { t } = useI18n();
   return (
     <section className="section cream" id="proof">
-      <div className="section-kicker"><span>05</span>Proof</div>
-      <h2 className="section-title">{content.proof.title}</h2>
-      <p className="lead">{content.proof.body}</p>
-      <div className="proof-grid">
-        <figure><img src={arena} alt="LDU founder-led experience credential" /></figure>
-        <figure><img src={horizon} alt="LDU founder-led experience credential" /></figure>
+      <div className="section-kicker"><span>05</span>{t("proof.kicker")}</div>
+      <div className="split-head">
+        <h2>{t("proof.title")}</h2>
+        <p className="lead">{t("proof.body")}</p>
+      </div>
+
+      <div className="proof-metrics">
+        {proof.map((n) => (
+          <article key={n}>
+            <small>{String(n).padStart(2, "0")}</small>
+            <h3>{t(`proof.m${n}`)}</h3>
+            <p>{t(`proof.p${n}`)}</p>
+          </article>
+        ))}
       </div>
     </section>
   );

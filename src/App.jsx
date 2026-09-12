@@ -6,33 +6,52 @@ import House from "./components/House";
 import Method from "./components/Method";
 import Services from "./components/Services";
 import Proof from "./components/Proof";
+import Cases from "./components/Cases";
 import Team from "./components/Team";
 import Contact from "./components/Contact";
+import Footer from "./components/Footer";
+import LegalPage from "./components/LegalPage";
+import { useI18n } from "./i18n/I18nContext";
+
+function Marquee() {
+  const { t } = useI18n();
+  const phrase = [t("marquee.q"), t("marquee.r"), t("marquee.h"), t("marquee.c"), t("marquee.s")].join(" ◆ ");
+  return (
+    <div className="marquee" aria-hidden="true">
+      <div>{phrase} ◆ {phrase} ◆</div>
+    </div>
+  );
+}
 
 export default function App() {
+  const legal = new URLSearchParams(window.location.search).get("legal");
+
+  if (legal === "privacy" || legal === "terms") {
+    return (
+      <>
+        <Header />
+        <LegalPage type={legal} />
+        <Footer />
+      </>
+    );
+  }
+
   return (
     <>
       <Header />
-      <main>
+      <main id="main">
         <Hero />
-        <div className="marquee">
-          <div>
-            ASK THE UNCOMFORTABLE QUESTION &#9670; REFRAME THE OPPORTUNITY &#9670; ROOT IT IN CULTURE &#9670; CONNECT THE PEOPLE &#9670; BUILD THE STAGE &#9670;
-            ASK THE UNCOMFORTABLE QUESTION &#9670; REFRAME THE OPPORTUNITY &#9670; ROOT IT IN CULTURE &#9670; CONNECT THE PEOPLE &#9670; BUILD THE STAGE &#9670;
-          </div>
-        </div>
+        <Marquee />
         <Position />
         <House />
         <Method />
         <Services />
         <Proof />
+        <Cases />
         <Team />
         <Contact />
       </main>
-      <footer>
-        <strong>LDU LLC</strong>
-        <span>Entertainment House &middot; Riyadh</span>
-      </footer>
+      <Footer />
     </>
   );
 }

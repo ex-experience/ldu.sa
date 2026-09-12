@@ -1,21 +1,40 @@
-﻿import React from "react";
-import { content } from "../data/content";
+import React from "react";
+import { useI18n } from "../i18n/I18nContext";
+
+const steps = ["reframe", "harmonize", "connect", "build"];
 
 export default function Method() {
+  const { t } = useI18n();
   return (
     <section className="section cream" id="method">
-      <div className="section-kicker"><span>03</span>The LDU method</div>
+      <div className="section-kicker"><span>03</span>{t("method.kicker")}</div>
+
       <div className="split-head">
-        <h2>{content.method.title}</h2>
-        <p className="lead">{content.method.intro}</p>
+        <h2>{t("method.title")}</h2>
+        <p className="lead">{t("method.intro")}</p>
       </div>
-      <blockquote>{content.method.quote}</blockquote>
+
+      <div className="story-stage">
+        <article>
+          <small>STORY</small>
+          <h3>{t("method.storyTitle")}</h3>
+          <p>{t("method.storyBody")}</p>
+        </article>
+        <article>
+          <small>STAGE</small>
+          <h3>{t("method.stageTitle")}</h3>
+          <p>{t("method.stageBody")}</p>
+        </article>
+      </div>
+
+      <blockquote>{t("method.quote")}</blockquote>
+
       <div className="method-grid">
-        {content.method.steps.map(([title, body], i) => (
-          <article key={title}>
+        {steps.map((key, i) => (
+          <article key={key}>
             <small>{String(i + 1).padStart(2, "0")}</small>
-            <h3>{title}</h3>
-            <p>{body}</p>
+            <h3>{t(`method.${key}`)}</h3>
+            <p>{t(`method.${key}Body`)}</p>
           </article>
         ))}
       </div>

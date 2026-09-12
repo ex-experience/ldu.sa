@@ -1,18 +1,27 @@
 import React from "react";
+import { useI18n } from "../i18n/I18nContext";
+
+const PHONE_DISPLAY = "+966 54 021 1883";
+const PHONE_LINK = "tel:+966540211883";
 
 export default function Contact() {
+  const { t } = useI18n();
   return (
     <section className="section navy" id="contact">
-      <div className="section-kicker inverse"><span>07</span>Project intake</div>
+      <div className="section-kicker inverse"><span>07</span>{t("contact.kicker")}</div>
       <div className="contact-grid">
         <div>
-          <h2>Bring the brief. We&rsquo;ll start where most people stop.</h2>
-          <p className="lead muted">Tell us what the project is for, who it must move, what already exists and what has to change.</p>
+          <h2>{t("contact.title")}</h2>
+          <p className="lead muted">{t("contact.body")}</p>
         </div>
-        <div className="contact-direct">
-          <span>RIYADH &middot; SAUDI ARABIA</span>
-          <a href="tel:+966540211883" dir="ltr">+966 54 021 1883</a>
-        </div>
+
+        <aside className="contact-direct">
+          <span>{t("contact.locationLabel")}</span>
+          <strong>{t("contact.location")}</strong>
+          <span>{t("contact.phoneLabel")}</span>
+          <a href={PHONE_LINK} dir="ltr">{PHONE_DISPLAY}</a>
+          <a className="button fill contact-button" href={PHONE_LINK}>{t("contact.call")}</a>
+        </aside>
       </div>
     </section>
   );
