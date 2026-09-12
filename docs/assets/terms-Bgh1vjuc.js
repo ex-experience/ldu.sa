@@ -1,0 +1,1 @@
+import{c as e}from"./index-CuIob3I4.js";import{t}from"./legal-BTAHg2g7.js";var n=e();function r(){return(0,n.jsx)(t,{kind:`terms`,sections:[{t:`terms.s1t`,b:`terms.s1b`},{t:`terms.s2t`,b:`terms.s2b`},{t:`terms.s3t`,b:`terms.s3b`},{t:`terms.s4t`,b:`terms.s4b`},{t:`terms.s5t`,b:`terms.s5b`}]})}export{r as component};
