@@ -15,6 +15,10 @@ export function I18nProvider({ children }) {
     document.documentElement.lang = lang;
     document.documentElement.dir = meta.dir;
     localStorage.setItem(STORAGE_KEY, lang);
+
+    const dict = dictionaries[lang] || dictionaries.en;
+    const suffix = dict["hero.meta"] || dictionaries.en["hero.meta"];
+    document.title = `LDU — ${suffix}`;
   }, [lang]);
 
   const value = useMemo(() => {

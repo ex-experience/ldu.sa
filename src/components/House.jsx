@@ -10,14 +10,16 @@ const rooms = [heroNight, heroStage, caseBanquet, caseDesert];
 export default function House() {
   const { t } = useI18n();
   return (
-    <section className="section ink" id="house">
-      <div className="section-kicker inverse"><span>02</span>{t("house.kicker")}</div>
-      <div className="split-head">
-        <h2>{t("house.title")}</h2>
-        <p className="lead muted">{t("house.body")}</p>
+    <section className="section ink" id="house" data-tone="dark">
+      <div data-reveal>
+        <div className="section-kicker inverse"><span>02</span>{t("house.kicker")}</div>
+        <div className="split-head">
+          <h2>{t("house.title")}</h2>
+          <p className="lead muted">{t("house.body")}</p>
+        </div>
       </div>
 
-      <div className="room-grid">
+      <div className="room-grid" data-reveal>
         {rooms.map((src, index) => {
           const n = index + 1;
           return (

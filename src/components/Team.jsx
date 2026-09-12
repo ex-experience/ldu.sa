@@ -4,14 +4,16 @@ import { useI18n } from "../i18n/I18nContext";
 export default function Team() {
   const { t } = useI18n();
   return (
-    <section className="section cream team" id="team">
-      <div className="section-kicker"><span>06</span>{t("team.kicker")}</div>
-      <div className="split-head">
-        <h2>{t("team.title")}</h2>
-        <p className="lead">{t("team.body")}</p>
+    <section className="section cream team" id="team" data-tone="light">
+      <div data-reveal>
+        <div className="section-kicker"><span>06</span>{t("team.kicker")}</div>
+        <div className="split-head">
+          <h2>{t("team.title")}</h2>
+          <p className="lead">{t("team.body")}</p>
+        </div>
       </div>
 
-      <div className="founders">
+      <div className="founders" data-reveal>
         <article>
           <small>{t("team.deemaLane")}</small>
           <h3>{t("team.deema")}</h3>

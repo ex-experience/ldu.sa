@@ -6,15 +6,16 @@ const steps = ["reframe", "harmonize", "connect", "build"];
 export default function Method() {
   const { t } = useI18n();
   return (
-    <section className="section cream" id="method">
-      <div className="section-kicker"><span>03</span>{t("method.kicker")}</div>
-
-      <div className="split-head">
-        <h2>{t("method.title")}</h2>
-        <p className="lead">{t("method.intro")}</p>
+    <section className="section cream" id="method" data-tone="light">
+      <div data-reveal>
+        <div className="section-kicker"><span>03</span>{t("method.kicker")}</div>
+        <div className="split-head">
+          <h2>{t("method.title")}</h2>
+          <p className="lead">{t("method.intro")}</p>
+        </div>
       </div>
 
-      <div className="story-stage">
+      <div className="story-stage" data-reveal>
         <article>
           <small>STORY</small>
           <h3>{t("method.storyTitle")}</h3>
@@ -27,9 +28,9 @@ export default function Method() {
         </article>
       </div>
 
-      <blockquote>{t("method.quote")}</blockquote>
+      <blockquote data-reveal>{t("method.quote")}</blockquote>
 
-      <div className="method-grid">
+      <div className="method-grid" data-reveal>
         {steps.map((key, i) => (
           <article key={key}>
             <small>{String(i + 1).padStart(2, "0")}</small>

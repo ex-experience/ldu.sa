@@ -11,6 +11,7 @@ import Team from "./components/Team";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import LegalPage from "./components/LegalPage";
+import ExperienceChrome from "./components/ExperienceChrome";
 import { useI18n } from "./i18n/I18nContext";
 
 function Marquee() {
@@ -26,31 +27,28 @@ function Marquee() {
 export default function App() {
   const legal = new URLSearchParams(window.location.search).get("legal");
 
-  if (legal === "privacy" || legal === "terms") {
-    return (
-      <>
-        <Header />
-        <LegalPage type={legal} />
-        <Footer />
-      </>
-    );
-  }
-
   return (
     <>
+      <ExperienceChrome />
       <Header />
-      <main id="main">
-        <Hero />
-        <Marquee />
-        <Position />
-        <House />
-        <Method />
-        <Services />
-        <Proof />
-        <Cases />
-        <Team />
-        <Contact />
-      </main>
+
+      {legal === "privacy" || legal === "terms" ? (
+        <LegalPage type={legal} />
+      ) : (
+        <main id="main">
+          <Hero />
+          <Marquee />
+          <Position />
+          <House />
+          <Method />
+          <Services />
+          <Proof />
+          <Cases />
+          <Team />
+          <Contact />
+        </main>
+      )}
+
       <Footer />
     </>
   );

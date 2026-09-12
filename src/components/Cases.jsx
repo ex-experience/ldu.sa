@@ -15,12 +15,14 @@ const cases = [
 export default function Cases() {
   const { t } = useI18n();
   return (
-    <section className="section cases-section">
-      <div className="section-kicker"><span>+</span>{t("cases.kicker")}</div>
-      <h2 className="section-title">{t("cases.title")}</h2>
-      <p className="case-note">{t("cases.note")}</p>
+    <section className="section cases-section" data-tone="light">
+      <div data-reveal>
+        <div className="section-kicker"><span>+</span>{t("cases.kicker")}</div>
+        <h2 className="section-title">{t("cases.title")}</h2>
+        <p className="case-note">{t("cases.note")}</p>
+      </div>
 
-      <div className="cases-grid">
+      <div className="cases-grid" data-reveal>
         {cases.map(([key, image, tag]) => (
           <article className="case-card" key={key}>
             <img src={image} alt="" />

@@ -17,6 +17,7 @@ export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [langOpen, setLangOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [tone, setTone] = useState("dark");
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 48);
@@ -26,23 +27,39 @@ export default function Header() {
   }, []);
 
   useEffect(() => {
+    const sections = [...document.querySelectorAll("[data-tone]")];
+    if (!sections.length) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)[0];
+
+        if (visible?.target?.dataset?.tone) {
+          setTone(visible.target.dataset.tone);
+        }
+      },
+      { rootMargin: "-12% 0px -70% 0px", threshold: 0 }
+    );
+
+    sections.forEach((section) => observer.observe(section));
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
   }, [menuOpen]);
 
-  const goHome = (hash = "") => {
-    const base = `${import.meta.env.BASE_URL}${hash}`;
-    window.location.href = base;
-  };
-
   return (
     <>
       <a className="skip-link" href="#main">{t("a11y.skip")}</a>
-      <header className={`topbar ${scrolled ? "topbar-solid" : ""}`}>
-        <button className="brand-button" type="button" onClick={() => goHome()}>
+      <header className={`topbar ${scrolled ? "topbar-solid" : ""} ${tone === "light" ? "topbar-light" : "topbar-dark"}`}>
+        <a className="brand-button" href={import.meta.env.BASE_URL} aria-label="LDU home">
           <img src={ibex} alt="" />
           <span>LDU</span>
-        </button>
+        </a>
 
         <nav className="desktop-nav" aria-label="Primary">
           {nav.map(([href, key]) => (
@@ -56,16 +73,19 @@ export default function Header() {
               type="button"
               className="pill-button"
               aria-expanded={langOpen}
+              aria-haspopup="listbox"
               onClick={() => setLangOpen((v) => !v)}
             >
               {languages[lang].label}
             </button>
             {langOpen && (
-              <div className="language-menu">
+              <div className="language-menu" role="listbox">
                 {Object.entries(languages).map(([code, meta]) => (
                   <button
                     key={code}
                     type="button"
+                    role="option"
+                    aria-selected={code === lang}
                     className={code === lang ? "active" : ""}
                     onClick={() => {
                       setLang(code);

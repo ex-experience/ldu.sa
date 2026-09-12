@@ -10,9 +10,9 @@ permissions:
   contents: read
 
 jobs:
-  build:
+  build-and-visual-qa:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 18
 
     steps:
       - name: Checkout
@@ -29,9 +29,34 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Install Chromium for visual QA
+        run: npx playwright install --with-deps chromium
+
+      - name: Start preview server
+        run: |
+          npm run preview -- --host 127.0.0.1 --port 4173 > /tmp/ldu-preview.log 2>&1 &
+          for i in {1..30}; do
+            if curl -fsS http://127.0.0.1:4173/ldu.sa/ > /dev/null; then
+              exit 0
+            fi
+            sleep 1
+          done
+          cat /tmp/ldu-preview.log
+          exit 1
+
+      - name: Capture visual QA
+        run: npm run visual-qa
+
       - name: Upload production build
         uses: actions/upload-artifact@v4
         with:
           name: ldu-source-rebuild-dist
           path: dist/
+          if-no-files-found: error
+
+      - name: Upload visual QA screenshots
+        uses: actions/upload-artifact@v4
+        with:
+          name: ldu-visual-qa
+          path: visual-qa/
           if-no-files-found: error

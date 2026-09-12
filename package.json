@@ -1,12 +1,13 @@
 {
   "name": "ldu-source-rebuild",
   "private": true,
-  "version": "0.1.0",
+  "version": "0.3.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "visual-qa": "node scripts/visual-qa.mjs"
   },
   "dependencies": {
     "react": "^19.2.0",
@@ -14,6 +15,7 @@
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^5.0.0",
+    "playwright": "^1.55.0",
     "vite": "^7.0.0"
   }
 }
