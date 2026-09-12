@@ -38,6 +38,32 @@ async function activateAllReveals(page, name) {
   }
 }
 
+async function activateAllImages(page) {
+  const images = page.locator("img");
+  const count = await images.count();
+
+  for (let i = 0; i < count; i += 1) {
+    const image = images.nth(i);
+    await image.scrollIntoViewIfNeeded().catch(() => {});
+    await page.waitForTimeout(35);
+  }
+
+  await page.waitForFunction(
+    () => [...document.images].every((img) => img.complete),
+    null,
+    { timeout: 12000 }
+  ).catch(() => {});
+
+  await page.evaluate(() => {
+    document.querySelectorAll(".commercial-rail").forEach((rail) => {
+      rail.scrollTo({ left: 0, top: 0, behavior: "auto" });
+    });
+    window.scrollTo(0, 0);
+  });
+
+  await page.waitForTimeout(140);
+}
+
 async function auditResponsive(page, name, width) {
   const audit = await page.evaluate(() => {
     const root = document.documentElement;
@@ -57,7 +83,7 @@ async function auditResponsive(page, name, width) {
       .slice(0, 8);
 
     const brokenImages = [...document.images]
-      .filter((img) => !img.complete || img.naturalWidth === 0)
+      .filter((img) => img.complete && img.naturalWidth === 0)
       .map((img) => img.currentSrc || img.src)
       .slice(0, 8);
 
@@ -125,6 +151,7 @@ async function screenshotMain({ name, width, height, lang, mobile = false }) {
 
   await setLanguage(page, base, lang);
   await activateAllReveals(page, name);
+  await activateAllImages(page);
   await auditResponsive(page, name, width);
 
   await page.screenshot({
