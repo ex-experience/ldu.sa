@@ -26,9 +26,16 @@ const credentialLabel = {
 function MiniLogos({ logos, label }) {
   return (
     <div className="founder-mini-logos" aria-label={label}>
-      {logos.map((logo) => (
-        <span className="founder-mini-logo" key={logo.alt} title={logo.alt}>
+      {logos.map((logo, index) => (
+        <span
+          className="founder-mini-logo"
+          key={logo.alt}
+          title={logo.alt}
+          style={{ "--spark-delay": `${index * 0.65}s` }}
+        >
+          <span className="founder-logo-spark" aria-hidden="true" />
           <img src={logo.src} alt={logo.alt} loading="lazy" decoding="async" />
+          <small className="founder-logo-name">{logo.alt}</small>
         </span>
       ))}
     </div>
@@ -43,7 +50,10 @@ export default function Team() {
   return (
     <section className="section cream team" id="team" data-tone="light">
       <div data-reveal>
-        <div className="section-kicker"><span>06</span>{t("team.kicker")}</div>
+        <div className="section-kicker">
+          <span>06</span>{t("team.kicker")}
+        </div>
+
         <div className="split-head">
           <h2>{t("team.title")}</h2>
           <p className="lead">{t("team.body")}</p>
@@ -73,10 +83,12 @@ export default function Team() {
           <span>{label}</span>
           <span>FOUNDER-LED / PRIOR COMPANIES</span>
         </div>
+
         <div className="brand-credentials-grid">
           {allLogos.map((logo) => (
             <div className="credential-logo" key={logo.alt}>
               <img src={logo.src} alt={logo.alt} loading="lazy" decoding="async" />
+              <small>{logo.alt}</small>
             </div>
           ))}
         </div>

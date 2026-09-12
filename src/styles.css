@@ -1393,3 +1393,291 @@ html[dir="rtl"] .commercial-hook h2 {
 
 /* End Phase 5 */
 
+
+/* Phase 6 notes-only patch: menu + logos + founder sparkle */
+
+/* iPhone/Safari mobile menu button: replace misaligned text with a true centered glyph */
+.mobile-menu-button {
+  width: 68px !important;
+  min-width: 68px !important;
+  height: 54px !important;
+  min-height: 54px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  display: inline-grid !important;
+  place-items: center !important;
+  line-height: 0 !important;
+  border-radius: 999px !important;
+  overflow: hidden;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.menu-glyph {
+  position: relative;
+  width: 24px;
+  height: 18px;
+  display: block;
+  pointer-events: none;
+}
+
+.menu-glyph i {
+  position: absolute;
+  left: 0;
+  width: 24px;
+  height: 1.5px;
+  background: currentColor;
+  border-radius: 999px;
+  transform-origin: center;
+  transition:
+    top .22s ease,
+    transform .22s ease,
+    opacity .18s ease;
+}
+
+.menu-glyph i:nth-child(1) { top: 1px; }
+.menu-glyph i:nth-child(2) { top: 8px; }
+.menu-glyph i:nth-child(3) { top: 15px; }
+
+.mobile-menu-button.is-open .menu-glyph i:nth-child(1) {
+  top: 8px;
+  transform: rotate(45deg);
+}
+
+.mobile-menu-button.is-open .menu-glyph i:nth-child(2) {
+  opacity: 0;
+}
+
+.mobile-menu-button.is-open .menu-glyph i:nth-child(3) {
+  top: 8px;
+  transform: rotate(-45deg);
+}
+
+.language-trigger {
+  display: inline-grid !important;
+  place-items: center !important;
+  line-height: 1 !important;
+}
+
+.language-trigger > span {
+  line-height: 1 !important;
+  transform: translateY(0) !important;
+}
+
+/* Founder logos: absolutely no white tiles / no boxes */
+.founder-mini-logos {
+  gap: clamp(16px, 2.5vw, 34px) !important;
+  align-items: end;
+}
+
+.founder-mini-logo {
+  position: relative;
+  width: min(112px, 29vw) !important;
+  height: auto !important;
+  min-height: 92px;
+  padding: 10px 6px 2px !important;
+  display: grid !important;
+  grid-template-rows: 58px auto;
+  align-items: center;
+  justify-items: center;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  overflow: visible !important;
+  isolation: isolate;
+}
+
+.founder-mini-logo img {
+  width: 100% !important;
+  height: 58px !important;
+  object-fit: contain !important;
+  background: transparent !important;
+  border: 0 !important;
+  mix-blend-mode: multiply;
+  filter:
+    drop-shadow(0 6px 12px rgba(22, 22, 22, .12))
+    saturate(1.08);
+  position: relative;
+  z-index: 2;
+}
+
+.founder-logo-name {
+  margin-top: 8px;
+  color: #626875;
+  font-size: .58rem !important;
+  line-height: 1.15;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  text-align: center;
+  white-space: nowrap;
+  position: relative;
+  z-index: 2;
+}
+
+.founder-logo-spark {
+  position: absolute;
+  z-index: 3;
+  top: 8px;
+  right: 5px;
+  width: 15px;
+  height: 15px;
+  opacity: .1;
+  pointer-events: none;
+  animation: founderSpark 3.2s ease-in-out infinite;
+  animation-delay: var(--spark-delay, 0s);
+}
+
+.founder-logo-spark::before,
+.founder-logo-spark::after {
+  content: "";
+  position: absolute;
+  inset: 50% auto auto 50%;
+  transform: translate(-50%, -50%);
+  background: #fff7d2;
+  box-shadow:
+    0 0 7px rgba(255, 238, 163, .95),
+    0 0 16px rgba(240, 70, 29, .34);
+  border-radius: 999px;
+}
+
+.founder-logo-spark::before {
+  width: 2px;
+  height: 15px;
+}
+
+.founder-logo-spark::after {
+  width: 15px;
+  height: 2px;
+}
+
+@keyframes founderSpark {
+  0%, 58%, 100% {
+    opacity: .08;
+    transform: scale(.55) rotate(0deg);
+  }
+  66% {
+    opacity: 1;
+    transform: scale(1.2) rotate(18deg);
+  }
+  74% {
+    opacity: .26;
+    transform: scale(.72) rotate(32deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .founder-logo-spark {
+    animation: none !important;
+    opacity: .38;
+  }
+}
+
+/* Large founder credential strip also stays transparent */
+.brand-credentials-grid {
+  background: transparent !important;
+}
+
+.credential-logo {
+  background: transparent !important;
+  box-shadow: none !important;
+  text-align: center;
+}
+
+.credential-logo img {
+  background: transparent !important;
+  mix-blend-mode: multiply;
+  filter:
+    grayscale(0) !important
+    drop-shadow(0 5px 10px rgba(20,20,20,.10));
+  opacity: 1 !important;
+}
+
+.credential-logo small {
+  display: block;
+  margin-top: 10px;
+  color: #6c7180;
+  font-size: .56rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+/* Case cards: logo + brand name together, transparent and integrated into the image */
+.case-brandline {
+  display: flex;
+  align-items: center;
+  gap: clamp(12px, 2vw, 20px);
+  margin: .75rem 0 .55rem;
+  min-width: 0;
+}
+
+.case-brand-logo {
+  width: clamp(58px, 7vw, 88px) !important;
+  height: clamp(38px, 5vw, 58px) !important;
+  flex: 0 0 auto;
+  object-fit: contain !important;
+  background: transparent !important;
+  border: 0 !important;
+  mix-blend-mode: screen;
+  filter:
+    drop-shadow(0 4px 10px rgba(0,0,0,.38))
+    drop-shadow(0 0 12px rgba(255,255,255,.12));
+}
+
+.case-brandline h3 {
+  margin: 0 !important;
+  min-width: 0;
+}
+
+@media (max-width: 820px) {
+  .mobile-menu-button {
+    width: 62px !important;
+    min-width: 62px !important;
+    height: 52px !important;
+    min-height: 52px !important;
+  }
+
+  .menu-glyph {
+    width: 22px;
+    height: 17px;
+  }
+
+  .menu-glyph i {
+    width: 22px;
+  }
+
+  .founder-mini-logos {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px !important;
+  }
+
+  .founder-mini-logo {
+    width: 100% !important;
+    min-width: 0;
+    min-height: 84px;
+    grid-template-rows: 52px auto;
+    padding-inline: 2px !important;
+  }
+
+  .founder-mini-logo img {
+    height: 52px !important;
+  }
+
+  .founder-logo-name {
+    font-size: .52rem !important;
+    letter-spacing: .045em;
+  }
+
+  .case-brandline {
+    align-items: center;
+    gap: 12px;
+  }
+
+  .case-brand-logo {
+    width: 62px !important;
+    height: 42px !important;
+  }
+}
+
+/* End Phase 6 notes-only patch */
+

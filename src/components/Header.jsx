@@ -49,13 +49,20 @@ export default function Header() {
 
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "";
-    return () => { document.body.style.overflow = ""; };
+    return () => {
+      document.body.style.overflow = "";
+    };
   }, [menuOpen]);
 
   return (
     <>
       <a className="skip-link" href="#main">{t("a11y.skip")}</a>
-      <header className={`topbar ${scrolled ? "topbar-solid" : ""} ${tone === "light" ? "topbar-light" : "topbar-dark"}`}>
+
+      <header
+        className={`topbar ${scrolled ? "topbar-solid" : ""} ${
+          tone === "light" ? "topbar-light" : "topbar-dark"
+        }`}
+      >
         <a className="brand-button" href={import.meta.env.BASE_URL} aria-label="LDU home">
           <img src={ibex} alt="" />
           <span>LDU</span>
@@ -71,13 +78,14 @@ export default function Header() {
           <div className="language">
             <button
               type="button"
-              className="pill-button"
+              className="pill-button language-trigger"
               aria-expanded={langOpen}
               aria-haspopup="listbox"
               onClick={() => setLangOpen((v) => !v)}
             >
-              {languages[lang].label}
+              <span>{languages[lang].label}</span>
             </button>
+
             {langOpen && (
               <div className="language-menu" role="listbox">
                 {Object.entries(languages).map(([code, meta]) => (
@@ -101,23 +109,35 @@ export default function Header() {
 
           <button
             type="button"
-            className="pill-button mobile-menu-button"
+            className={`pill-button mobile-menu-button ${menuOpen ? "is-open" : ""}`}
             aria-expanded={menuOpen}
+            aria-label={t(menuOpen ? "nav.close" : "nav.menu")}
             onClick={() => setMenuOpen((v) => !v)}
           >
-            {t(menuOpen ? "nav.close" : "nav.menu")}
+            <span className="menu-glyph" aria-hidden="true">
+              <i />
+              <i />
+              <i />
+            </span>
           </button>
         </div>
       </header>
 
       {menuOpen && (
         <div className="mobile-menu">
-          <button className="mobile-menu-backdrop" aria-label={t("nav.close")} onClick={() => setMenuOpen(false)} />
+          <button
+            className="mobile-menu-backdrop"
+            aria-label={t("nav.close")}
+            onClick={() => setMenuOpen(false)}
+          />
           <nav>
             <div className="mobile-menu-head">
               <span>LDU</span>
-              <button type="button" onClick={() => setMenuOpen(false)}>{t("nav.close")}</button>
+              <button type="button" onClick={() => setMenuOpen(false)}>
+                {t("nav.close")}
+              </button>
             </div>
+
             {nav.map(([href, key, n]) => (
               <a key={href} href={href} onClick={() => setMenuOpen(false)}>
                 <small>{n}</small>
