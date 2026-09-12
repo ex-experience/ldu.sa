@@ -1,4 +1,4 @@
-﻿import React from "react";
+import React from "react";
 import Header from "./components/Header";
 import Hero from "./components/Hero";
 import Position from "./components/Position";
@@ -17,8 +17,8 @@ export default function App() {
         <Hero />
         <div className="marquee">
           <div>
-            ASK THE UNCOMFORTABLE QUESTION â—† REFRAME THE OPPORTUNITY â—† ROOT IT IN CULTURE â—† CONNECT THE PEOPLE â—† BUILD THE STAGE â—†
-            ASK THE UNCOMFORTABLE QUESTION â—† REFRAME THE OPPORTUNITY â—† ROOT IT IN CULTURE â—† CONNECT THE PEOPLE â—† BUILD THE STAGE â—†
+            ASK THE UNCOMFORTABLE QUESTION &#9670; REFRAME THE OPPORTUNITY &#9670; ROOT IT IN CULTURE &#9670; CONNECT THE PEOPLE &#9670; BUILD THE STAGE &#9670;
+            ASK THE UNCOMFORTABLE QUESTION &#9670; REFRAME THE OPPORTUNITY &#9670; ROOT IT IN CULTURE &#9670; CONNECT THE PEOPLE &#9670; BUILD THE STAGE &#9670;
           </div>
         </div>
         <Position />
@@ -31,7 +31,7 @@ export default function App() {
       </main>
       <footer>
         <strong>LDU LLC</strong>
-        <span>Entertainment House Â· Riyadh</span>
+        <span>Entertainment House &middot; Riyadh</span>
       </footer>
     </>
   );

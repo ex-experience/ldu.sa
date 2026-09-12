@@ -1,4 +1,4 @@
-﻿import React from "react";
+import React from "react";
 import { content } from "../data/content";
 
 export default function Team() {
@@ -19,8 +19,8 @@ export default function Team() {
         <article>
           <small>CULTURE / EXPERIENCE</small>
           <h3>Emran Arif</h3>
-          <strong>Co-Founder Â· Cultural Strategy</strong>
-          <p>Leads cultural strategy, concept development and the audience journey â€” shaping how an idea is understood, felt and remembered.</p>
+          <strong>Co-Founder &middot; Cultural Strategy</strong>
+          <p>Leads cultural strategy, concept development and the audience journey &mdash; shaping how an idea is understood, felt and remembered.</p>
         </article>
       </div>
       <p className="attribution">Selected brand credentials are founder-led work delivered at previous companies; they are not presented as direct LDU client work.</p>

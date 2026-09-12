@@ -1,6 +1,6 @@
-﻿export const content = {
+export const content = {
   hero: {
-    meta: "Entertainment House Â· Riyadh",
+    meta: "Entertainment House \u00B7 Riyadh",
     line1: "LDU makes",
     line2: "entertainment",
     line3: "belong.",
@@ -23,7 +23,7 @@
   house: {
     title: "Four rooms. One standard of belonging.",
     body:
-      "The site is a stage. These rooms are how LDU thinks about atmosphere â€” worlds we know how to build, not a catalogue of invoices."
+      "The site is a stage. These rooms are how LDU thinks about atmosphere \u2014 worlds we know how to build, not a catalogue of invoices."
   },
   method: {
     title: "Story + Stage.",
@@ -50,6 +50,6 @@
   team: {
     title: "Saudi-rooted. Built to work across worlds.",
     body:
-      "A Saudi team working across entertainment, partnerships, culture, image and sound. The value is not one discipline in isolation â€” it is keeping the idea coherent from the first conversation to the moment the audience meets it."
+      "A Saudi team working across entertainment, partnerships, culture, image and sound. The value is not one discipline in isolation \u2014 it is keeping the idea coherent from the first conversation to the moment the audience meets it."
   }
 };

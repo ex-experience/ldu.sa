@@ -1,4 +1,4 @@
-﻿import React from "react";
+import React from "react";
 import { content } from "../data/content";
 import ibex from "../../docs/brand/ibex.png";
 
@@ -15,7 +15,7 @@ export default function Position() {
       </section>
 
       <section className="section ink">
-        <div className="section-kicker inverse"><span>â€”</span>The uncomfortable questions</div>
+        <div className="section-kicker inverse"><span>&mdash;</span>The uncomfortable questions</div>
         <h2 className="section-title">The questions are not a warm-up to the work. They frequently are the work.</h2>
         <div className="question-grid">
           {content.questions.map(([q, a], i) => (
