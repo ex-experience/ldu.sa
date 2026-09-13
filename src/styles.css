@@ -2293,7 +2293,7 @@ html[dir="rtl"] .marquee-track span {
 .hero-ibex-image {
   object-fit: cover !important;
   object-position: center 48% !important;
-  transform: scaleX(-1) !important;
+  transform: scaleX(1) !important;
   animation: none !important;
   filter: brightness(.74) saturate(.88) contrast(1.05);
 }
@@ -2611,3 +2611,9 @@ html[dir="rtl"] .quick-contact-card {
 }
 
 /* End Editorial v2 */
+
+/* Gold ibex right-facing lock v2 */
+.hero-ibex-image {
+  transform: scaleX(1) !important;
+}
+/* End gold ibex right-facing lock v2 */
