@@ -2624,3 +2624,139 @@ img[src*="LDU_ibex_gold_attached"] {
   transform: scaleX(1) !important;
 }
 /* End LDU right-facing gold ibex lock */
+
+/* Team credential rails v1 */
+.team-grid-credentials {
+  align-items: stretch;
+}
+
+.credential-profile-card {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  overflow: hidden;
+}
+
+.credential-profile-card > p {
+  flex: 1;
+}
+
+.credential-rail {
+  position: relative;
+  margin-top: clamp(1.6rem, 3vw, 2.5rem);
+  padding-top: 1.25rem;
+  border-top: 1px solid rgba(16, 37, 74, .18);
+}
+
+.credential-rail-mask {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+
+.credential-rail-track {
+  --credential-duration: 28s;
+  display: flex;
+  width: max-content;
+  gap: clamp(1.6rem, 3vw, 2.8rem);
+  align-items: center;
+  animation: credentialRail var(--credential-duration) linear infinite;
+  will-change: transform;
+}
+
+.credential-rail:hover .credential-rail-track,
+.credential-rail:focus-within .credential-rail-track {
+  animation-play-state: paused;
+}
+
+.credential-mark {
+  flex: 0 0 clamp(86px, 8.2vw, 118px);
+  height: 64px;
+  display: grid;
+  place-items: center;
+  position: relative;
+}
+
+.credential-mark img {
+  display: block;
+  max-width: 100%;
+  max-height: 58px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  filter: saturate(.95) contrast(1.03);
+  transform: translateZ(0);
+  transition: transform .3s ease, filter .3s ease, opacity .3s ease;
+}
+
+.credential-mark:hover img {
+  transform: scale(1.08);
+  filter: saturate(1.12) contrast(1.05);
+}
+
+.team-credentials-note {
+  margin-top: clamp(2rem, 4vw, 3.5rem);
+  max-width: 72rem;
+}
+
+@keyframes credentialRail {
+  from { transform: translate3d(0,0,0); }
+  to   { transform: translate3d(-50%,0,0); }
+}
+
+html[dir="rtl"] .credential-rail-track {
+  animation-name: credentialRailRtl;
+}
+
+@keyframes credentialRailRtl {
+  from { transform: translate3d(0,0,0); }
+  to   { transform: translate3d(50%,0,0); }
+}
+
+@media (max-width: 980px) {
+  .team-grid-credentials {
+    grid-template-columns: 1fr;
+  }
+
+  .credential-profile-card {
+    min-height: auto;
+  }
+
+  .credential-mark {
+    flex-basis: 104px;
+  }
+}
+
+@media (max-width: 520px) {
+  .credential-rail {
+    margin-inline: -2px;
+  }
+
+  .credential-mark {
+    flex-basis: 88px;
+    height: 58px;
+  }
+
+  .credential-mark img {
+    max-height: 50px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .credential-rail-track {
+    animation: none !important;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .credential-rail-track > :nth-child(n + 15) {
+    display: none;
+  }
+}
+/* End team credential rails v1 */
