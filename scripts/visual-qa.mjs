@@ -7,6 +7,22 @@ const out = "visual-qa";
 await fs.mkdir(out, { recursive: true });
 const browser = await chromium.launch();
 
+async function stabilizeQaMotion(page) {
+  await page.addStyleTag({
+    content: `
+      html { scroll-behavior: auto !important; }
+      *, *::before, *::after {
+        transition-duration: 0s !important;
+        transition-delay: 0s !important;
+      }
+      .credential-rail-track {
+        animation: none !important;
+        transform: none !important;
+      }
+    `
+  });
+}
+
 async function setLanguage(page, target, lang) {
   await page.goto(target, { waitUntil: "networkidle" });
   await page.evaluate((value) => {
@@ -17,6 +33,8 @@ async function setLanguage(page, target, lang) {
   await page.evaluate(async () => {
     if (document.fonts?.ready) await document.fonts.ready;
   });
+
+  await stabilizeQaMotion(page);
 }
 
 async function activateAllReveals(page, name) {
@@ -26,11 +44,11 @@ async function activateAllReveals(page, name) {
   for (let i = 0; i < count; i += 1) {
     const item = reveals.nth(i);
     await item.scrollIntoViewIfNeeded();
-    await page.waitForTimeout(70);
+    await page.waitForTimeout(45);
   }
 
   await page.evaluate(() => window.scrollTo(0, 0));
-  await page.waitForTimeout(140);
+  await page.waitForTimeout(100);
 
   const hidden = await page.locator("[data-reveal]:not(.is-visible)").count();
   if (hidden !== 0) {
@@ -39,19 +57,22 @@ async function activateAllReveals(page, name) {
 }
 
 async function activateAllImages(page) {
-  const images = page.locator("img");
-  const count = await images.count();
+  await page.evaluate(() => {
+    document.querySelectorAll("img").forEach((img) => {
+      img.loading = "eager";
+      img.decoding = "sync";
+    });
 
-  for (let i = 0; i < count; i += 1) {
-    const image = images.nth(i);
-    await image.scrollIntoViewIfNeeded().catch(() => {});
-    await page.waitForTimeout(35);
-  }
+    document.querySelectorAll(".credential-rail-track").forEach((track) => {
+      track.style.animation = "none";
+      track.style.transform = "none";
+    });
+  });
 
   await page.waitForFunction(
     () => [...document.images].every((img) => img.complete),
     null,
-    { timeout: 12000 }
+    { timeout: 15000 }
   ).catch(() => {});
 
   await page.evaluate(() => {
@@ -61,7 +82,7 @@ async function activateAllImages(page) {
     window.scrollTo(0, 0);
   });
 
-  await page.waitForTimeout(140);
+  await page.waitForTimeout(100);
 }
 
 async function auditResponsive(page, name, width) {
@@ -142,12 +163,16 @@ async function auditResponsive(page, name, width) {
 }
 
 async function screenshotMain({ name, width, height, lang, mobile = false }) {
+  console.log(`QA start: ${name}`);
+
   const page = await browser.newPage({
     viewport: { width, height },
     deviceScaleFactor: 1,
     isMobile: mobile,
     hasTouch: mobile || width <= 1024
   });
+
+  page.setDefaultTimeout(12000);
 
   await setLanguage(page, base, lang);
   await activateAllReveals(page, name);
@@ -157,10 +182,12 @@ async function screenshotMain({ name, width, height, lang, mobile = false }) {
   await page.screenshot({
     path: `${out}/${name}.png`,
     fullPage: true,
-    animations: "disabled"
+    animations: "disabled",
+    timeout: 20000
   });
 
   await page.close();
+  console.log(`QA passed: ${name}`);
 }
 
 const mainCaptures = [
@@ -191,6 +218,7 @@ for (const lang of ["en", "ar"]) {
     hasTouch: true
   });
 
+  page.setDefaultTimeout(12000);
   await setLanguage(page, base, lang);
   await page.locator(".mobile-menu-button").click();
   await page.waitForTimeout(120);
@@ -199,7 +227,8 @@ for (const lang of ["en", "ar"]) {
   await page.screenshot({
     path: `${out}/mobile-${lang}-menu.png`,
     fullPage: false,
-    animations: "disabled"
+    animations: "disabled",
+    timeout: 20000
   });
 
   await page.close();
@@ -211,6 +240,7 @@ for (const [lang, legal] of [["en", "privacy"], ["ar", "terms"]]) {
     deviceScaleFactor: 1
   });
 
+  page.setDefaultTimeout(12000);
   const target = `${base}?legal=${legal}`;
   await setLanguage(page, target, lang);
   await auditResponsive(page, `legal-${lang}-${legal}`, 1440);
@@ -218,7 +248,8 @@ for (const [lang, legal] of [["en", "privacy"], ["ar", "terms"]]) {
   await page.screenshot({
     path: `${out}/legal-${lang}-${legal}.png`,
     fullPage: true,
-    animations: "disabled"
+    animations: "disabled",
+    timeout: 20000
   });
 
   await page.close();
