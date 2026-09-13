@@ -17,11 +17,23 @@ import { useI18n } from "./i18n/I18nContext";
 
 function Marquee() {
   const { t } = useI18n();
-  const phrase = [t("marquee.q"), t("marquee.r"), t("marquee.h"), t("marquee.c"), t("marquee.s")].join(" ◆ ");
+  const phrases = [
+    t("marquee.q"),
+    t("marquee.r"),
+    t("marquee.h"),
+    t("marquee.c"),
+    t("marquee.s")
+  ];
+
+  const loop = [...phrases, ...phrases];
 
   return (
     <div className="marquee" aria-hidden="true">
-      <div>{phrase} ◆ {phrase} ◆</div>
+      <div className="marquee-track">
+        {loop.map((phrase, index) => (
+          <span key={`${phrase}-${index}`}>{phrase}</span>
+        ))}
+      </div>
     </div>
   );
 }

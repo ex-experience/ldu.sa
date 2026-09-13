@@ -16,11 +16,24 @@ const emranLogos = [
   { src: `${ASSET_ROOT}/emran/level-up.png`, alt: "Level Up" }
 ];
 
+const additionalCredentials = [
+  "Riyadh Season",
+  "Bonafide",
+  "JK58",
+  "STV",
+  "CCC by stc",
+  "noon",
+  "Bemol Studio",
+  "Lilou Artisan Patisserie",
+  "DXA",
+  "Imagine L"
+];
+
 const credentialLabel = {
   en: "Selected founder-led brand credentials",
-  ar: "نماذج مختارة من خبرات المؤسسين مع العلامات",
+  ar: "نماذج مختارة من خبرات الفريق السابقة",
   fr: "Références de marques sélectionnées, portées par les fondateurs",
-  es: "Credenciales de marca seleccionadas, lideradas por los fundadores"
+  es: "Credenciales seleccionadas de trabajos previos del equipo"
 };
 
 function MiniLogos({ logos, label }) {
@@ -50,9 +63,7 @@ export default function Team() {
   return (
     <section className="section cream team" id="team" data-tone="light">
       <div data-reveal>
-        <div className="section-kicker">
-          <span>06</span>{t("team.kicker")}
-        </div>
+        <div className="section-kicker">{t("team.kicker")}</div>
 
         <div className="split-head">
           <h2>{t("team.title")}</h2>
@@ -60,7 +71,7 @@ export default function Team() {
         </div>
       </div>
 
-      <div className="founders" data-reveal>
+      <div className="team-grid" data-reveal>
         <article className="founder-card">
           <small>{t("team.deemaLane")}</small>
           <h3>{t("team.deema")}</h3>
@@ -76,12 +87,20 @@ export default function Team() {
           <p>{t("team.emranBody")}</p>
           <MiniLogos logos={emranLogos} label={label} />
         </article>
+
+        <article className="founder-card team-card-sara">
+          <small>{t("team.saraLane")}</small>
+          <h3>{t("team.sara")}</h3>
+          <strong>{t("team.saraRole")}</strong>
+          <p>{t("team.saraBody")}</p>
+          <div className="team-role-mark" aria-hidden="true">LDU / MARKETING</div>
+        </article>
       </div>
 
       <div className="brand-credentials" data-reveal>
         <div className="brand-credentials-head">
           <span>{label}</span>
-          <span>FOUNDER-LED / PRIOR COMPANIES</span>
+          <span>{t("team.priorLabel")}</span>
         </div>
 
         <div className="brand-credentials-grid">
@@ -91,6 +110,15 @@ export default function Team() {
               <small>{logo.alt}</small>
             </div>
           ))}
+        </div>
+
+        <div className="additional-credentials" aria-label={t("team.additionalLabel")}>
+          <span className="additional-credentials-title">{t("team.additionalLabel")}</span>
+          <div>
+            {additionalCredentials.map((name) => (
+              <span className="credential-wordmark" key={name}>{name}</span>
+            ))}
+          </div>
         </div>
       </div>
 

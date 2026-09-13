@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useI18n } from "../i18n/I18nContext";
-import ibex from "../../docs/brand/ibex.png";
+import logoIvory from "../assets/brand-kit/LDU_logo_ivory_on_transparent.svg";
+import logoOnyx from "../assets/brand-kit/LDU_logo_onyx_on_transparent.svg";
 
 const nav = [
-  ["#position", "nav.position", "01"],
-  ["#house", "nav.house", "02"],
-  ["#method", "nav.method", "03"],
-  ["#services", "nav.services", "04"],
-  ["#proof", "nav.proof", "05"],
-  ["#team", "nav.team", "06"],
-  ["#contact", "nav.contact", "07"]
+  ["#position", "nav.position"],
+  ["#house", "nav.house"],
+  ["#method", "nav.method"],
+  ["#services", "nav.services"],
+  ["#proof", "nav.proof"],
+  ["#team", "nav.team"],
+  ["#contact", "nav.contact"]
 ];
 
 export default function Header() {
@@ -63,9 +64,9 @@ export default function Header() {
           tone === "light" ? "topbar-light" : "topbar-dark"
         }`}
       >
-        <a className="brand-button" href={import.meta.env.BASE_URL} aria-label="LDU home">
-          <img src={ibex} alt="" />
-          <span>LDU</span>
+        <a className="brand-button brand-wordmark" href={import.meta.env.BASE_URL} aria-label="LDU home">
+          <img className="brand-logo brand-logo-ivory" src={logoIvory} alt="LDU" />
+          <img className="brand-logo brand-logo-onyx" src={logoOnyx} alt="LDU" />
         </a>
 
         <nav className="desktop-nav" aria-label="Primary">
@@ -132,15 +133,14 @@ export default function Header() {
           />
           <nav>
             <div className="mobile-menu-head">
-              <span>LDU</span>
+              <img src={logoIvory} alt="LDU" />
               <button type="button" onClick={() => setMenuOpen(false)}>
                 {t("nav.close")}
               </button>
             </div>
 
-            {nav.map(([href, key, n]) => (
+            {nav.map(([href, key]) => (
               <a key={href} href={href} onClick={() => setMenuOpen(false)}>
-                <small>{n}</small>
                 <strong>{t(key)}</strong>
               </a>
             ))}

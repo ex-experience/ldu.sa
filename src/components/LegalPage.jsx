@@ -15,10 +15,9 @@ export default function LegalPage({ type }) {
       <p className="legal-intro">{t(`${prefix}.intro`)}</p>
       <p className="legal-updated">{t("legal.updated")}</p>
 
-      <div className="legal-sections">
+      <div className="legal-sections no-number-legal">
         {sections.map((n) => (
           <section key={n}>
-            <small>{String(n).padStart(2, "0")}</small>
             <h2>{t(`${prefix}.s${n}t`)}</h2>
             <p>{t(`${prefix}.s${n}b`)}</p>
           </section>
