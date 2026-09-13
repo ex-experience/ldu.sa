@@ -2760,3 +2760,324 @@ html[dir="rtl"] .credential-rail-track {
   }
 }
 /* End team credential rails v1 */
+
+/* Compact journey to contact v1 */
+:root {
+  --section-compact: clamp(54px, 6vw, 92px);
+}
+
+/* Shorter editorial rhythm without removing the remaining content */
+.section {
+  padding: var(--section-compact) var(--pad);
+}
+
+.section-kicker {
+  margin-bottom: clamp(.9rem, 1.6vw, 1.45rem);
+}
+
+.section h2,
+.section-title {
+  font-size: clamp(42px, 6vw, 92px);
+  line-height: .96;
+}
+
+.lead {
+  font-size: clamp(17px, 1.55vw, 24px);
+  line-height: 1.4;
+}
+
+.position-grid,
+.split-head,
+.contact-grid {
+  gap: clamp(24px, 4vw, 60px);
+}
+
+#position + .section {
+  padding-top: clamp(44px, 4.7vw, 70px);
+  padding-bottom: clamp(48px, 5vw, 76px);
+}
+
+.question-grid,
+.method-grid,
+.service-grid,
+.proof-metrics {
+  margin-top: clamp(1.5rem, 2.5vw, 2.25rem);
+}
+
+.question-grid article,
+.method-grid article,
+.service-grid article,
+.proof-metrics article {
+  min-height: 200px;
+  padding: 1.2rem 1.15rem;
+}
+
+.question-grid h3,
+.method-grid h3,
+.service-grid h3,
+.proof-metrics h3 {
+  margin: 1.65rem 0 .65rem;
+  font-size: clamp(25px, 2.25vw, 38px);
+  line-height: 1.08;
+}
+
+.question-grid p,
+.method-grid p,
+.service-grid p,
+.proof-metrics p,
+.capability-list p,
+.founder-work-card p,
+.founder-card > p {
+  line-height: 1.46;
+}
+
+.story-stage {
+  margin-top: clamp(1.8rem, 3vw, 3rem);
+}
+
+.story-stage article {
+  padding-block: 1.6rem;
+}
+
+.story-stage h3 {
+  margin-top: .6rem;
+}
+
+blockquote {
+  margin: clamp(2rem, 3.4vw, 3.25rem) 0;
+  padding: clamp(1.2rem, 2vw, 1.8rem) 0;
+  font-size: clamp(34px, 4.6vw, 68px);
+  line-height: 1.02;
+}
+
+.capability-list {
+  margin-top: clamp(1.8rem, 3vw, 3rem);
+}
+
+.capability-list article {
+  padding: 1.05rem 0;
+  gap: 1.3rem;
+}
+
+.capability-list h3 {
+  font-size: clamp(23px, 2.35vw, 36px);
+}
+
+.cases-section .case-note {
+  margin-top: 1rem;
+}
+
+.founder-work-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1px;
+  margin-top: clamp(1.8rem, 3vw, 2.75rem);
+}
+
+.founder-work-card {
+  min-height: 22rem;
+  padding: clamp(1.25rem, 2vw, 2rem);
+}
+
+.founder-work-logo-lock {
+  min-height: 92px !important;
+  margin: clamp(1rem, 2vw, 1.8rem) auto !important;
+}
+
+.founder-work-card h3 {
+  margin: 1.4rem 0 .6rem;
+  font-size: clamp(30px, 3.1vw, 48px);
+}
+
+.team-grid {
+  margin-top: clamp(2rem, 3.5vw, 3.5rem);
+  gap: clamp(14px, 2vw, 28px);
+}
+
+.founder-card {
+  padding: clamp(20px, 2.2vw, 30px) !important;
+}
+
+.founder-card h3 {
+  margin: .8rem 0 .3rem;
+  font-size: clamp(34px, 3.8vw, 56px);
+}
+
+.founder-card > p {
+  min-height: 0;
+  margin-bottom: .4rem;
+}
+
+.credential-rail {
+  margin-top: clamp(1rem, 2vw, 1.6rem);
+  padding-top: .9rem;
+}
+
+.team-credentials-note {
+  margin-top: clamp(1.4rem, 2.5vw, 2.2rem);
+}
+
+.commercial-hook {
+  padding: clamp(56px, 6vw, 88px) var(--pad);
+}
+
+.commercial-hook-head {
+  gap: clamp(24px, 4vw, 54px);
+}
+
+.commercial-hook h2 {
+  font-size: clamp(42px, 6vw, 86px);
+  line-height: .96;
+}
+
+.commercial-rail {
+  margin-top: clamp(24px, 3vw, 38px);
+}
+
+.commercial-frame {
+  min-height: 0;
+  aspect-ratio: 16 / 10;
+}
+
+.quick-contact-grid {
+  margin-top: clamp(1.7rem, 3vw, 3rem);
+}
+
+.quick-contact-card {
+  min-height: 142px;
+  padding: 1.2rem;
+}
+
+/* Arabic should read confidently, not look over-spaced */
+html[dir="rtl"] .lead,
+html[dir="rtl"] .position-grid .lead,
+html[dir="rtl"] .question-grid p,
+html[dir="rtl"] .method-grid p,
+html[dir="rtl"] .service-grid p,
+html[dir="rtl"] .proof-metrics p,
+html[dir="rtl"] .story-stage p,
+html[dir="rtl"] .founder-work-card p,
+html[dir="rtl"] .founder-card > p,
+html[dir="rtl"] .contact-section p {
+  word-spacing: .015em !important;
+  line-height: 1.62 !important;
+}
+
+/* Compact tablet layout: preserve content, reduce page length */
+@media (max-width: 1100px) and (min-width: 621px) {
+  .founder-work-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .founder-work-card {
+    min-height: 18rem;
+  }
+}
+
+@media (max-width: 820px) {
+  .section {
+    padding: clamp(44px, 10vw, 66px) var(--pad);
+  }
+
+  .section-kicker {
+    margin-bottom: 1rem;
+  }
+
+  .section h2,
+  .section-title {
+    font-size: clamp(36px, 9.5vw, 52px);
+    line-height: 1;
+  }
+
+  .lead {
+    font-size: 16.5px;
+    line-height: 1.42;
+  }
+
+  .position-grid,
+  .split-head,
+  .contact-grid {
+    gap: 20px;
+  }
+
+  .question-grid,
+  .method-grid,
+  .proof-metrics,
+  .service-grid {
+    margin-top: 1.4rem;
+  }
+
+  .question-grid article,
+  .method-grid article,
+  .service-grid article,
+  .proof-metrics article {
+    min-height: 0;
+    padding: 1rem 0;
+  }
+
+  .question-grid h3,
+  .method-grid h3,
+  .service-grid h3,
+  .proof-metrics h3 {
+    margin: 1rem 0 .5rem;
+    font-size: clamp(24px, 6.5vw, 34px);
+  }
+
+  blockquote {
+    margin: 1.8rem 0;
+    padding: 1.1rem 0;
+  }
+
+  .capability-list {
+    margin-top: 1.6rem;
+  }
+
+  .capability-list article {
+    padding: .9rem 0;
+  }
+
+  .team-grid {
+    margin-top: 1.8rem;
+    gap: 12px;
+  }
+
+  .founder-card {
+    padding: 18px !important;
+  }
+
+  .commercial-hook {
+    padding:
+      clamp(48px, 11vw, 68px)
+      max(var(--pad), env(safe-area-inset-left))
+      max(48px, calc(40px + env(safe-area-inset-bottom)))
+      max(var(--pad), env(safe-area-inset-right));
+  }
+
+  .commercial-hook-head {
+    gap: 18px;
+  }
+
+  .commercial-rail {
+    margin-top: 22px;
+  }
+
+  .commercial-frame,
+  .commercial-frame-1,
+  .commercial-frame-4 {
+    aspect-ratio: 16 / 11;
+  }
+
+  .quick-contact-card {
+    min-height: 108px;
+  }
+}
+
+@media (max-width: 620px) {
+  .founder-work-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .founder-work-card {
+    min-height: 15.5rem;
+  }
+}
+/* End compact journey to contact v1 */

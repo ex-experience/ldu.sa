@@ -5,7 +5,7 @@ import logoOnyx from "../assets/brand-kit/LDU_logo_onyx_on_transparent.svg";
 
 const nav = [
   ["#position", "nav.position"],
-  ["#house", "nav.house"],
+
   ["#method", "nav.method"],
   ["#services", "nav.services"],
   ["#proof", "nav.proof"],

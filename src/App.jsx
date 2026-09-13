@@ -1,9 +1,9 @@
 import React from "react";
 import Header from "./components/Header";
 import Hero from "./components/Hero";
-import SectionIndex from "./components/SectionIndex";
+
 import Position from "./components/Position";
-import House from "./components/House";
+
 import Method from "./components/Method";
 import Services from "./components/Services";
 import Proof from "./components/Proof";
@@ -53,9 +53,9 @@ export default function App() {
         <main id="main">
           <Hero />
           <Marquee />
-          <SectionIndex />
+
           <Position />
-          <House />
+
           <Method />
           <Services />
           <Proof />

@@ -26,7 +26,7 @@ export default function Hero() {
         </div>
 
         <div className="hero-actions">
-          <a className="button fill" href="#section-index">{t("index.kicker")}</a>
+          <a className="button fill" href="#position">{t("nav.position")}</a>
           <a className="button line" href="#contact">{t("nav.contact")}</a>
         </div>
       </div>
