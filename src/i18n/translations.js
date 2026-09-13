@@ -18,7 +18,7 @@ const en = {
   "nav.close": "Close",
   "nav.language": "Language",
 
-  "hero.meta": "Entertainment Solutions Company · Riyadh",
+  "hero.meta": "LDU · Entertainment Solutions Company · Riyadh",
   "hero.l1": "LDU makes",
   "hero.l2": "entertainment",
   "hero.l3": "belong.",
@@ -34,6 +34,10 @@ const en = {
   "marquee.h": "Root it in culture",
   "marquee.c": "Connect the people",
   "marquee.s": "Build the stage",
+
+  "index.kicker": "Explore",
+  "index.title": "Explore LDU by section.",
+  "index.body": "The site is organized as clear editorial chapters, so you can move directly to the part you need instead of reading one uninterrupted long page.",
 
   "position.kicker": "Position",
   "position.title": "Entertainment can arrive from outside. It can be built from inside. Neither belongs automatically.",
@@ -205,8 +209,8 @@ const ar = {
   "nav.close": "إغلاق",
   "nav.language": "اللغة",
 
-  "hero.meta": "شركة حلول ترفيهية · الرياض",
-  "hero.l1": "LDU تجعل",
+  "hero.meta": "إل دي يونيك · شركة حلول ترفيهية · الرياض",
+  "hero.l1": "إل دي يونيك تجعل",
   "hero.l2": "الترفيه",
   "hero.l3": "ينتمي.",
   "hero.purposeLabel": "الغاية",
@@ -222,9 +226,13 @@ const ar = {
   "marquee.c": "اربط الأشخاص المناسبين",
   "marquee.s": "ابنِ المسرح",
 
+  "index.kicker": "استكشف",
+  "index.title": "استكشف إل دي يونيك حسب القسم.",
+  "index.body": "نظمنا الموقع كفصول تحريرية واضحة، لتصل مباشرة إلى الجزء الذي تحتاجه بدل المرور في صفحة واحدة طويلة ومتواصلة.",
+
   "position.kicker": "تموضعنا",
   "position.title": "قد يأتي الترفيه من الخارج أو يولد من الداخل. في الحالتين، الانتماء ليس تلقائيًا.",
-  "position.body": "تعمل LDU عند نقطة الالتقاء بين العلامات والمؤسسات والمشروعات الترفيهية والمواهب والجمهور. نراجع الملخص، نكشف الفرصة الأهم تحته، نضبطها على الثقافة التي ستعيش فيها، نصل الأشخاص القادرين على تحويلها إلى واقع، ثم نصوغ القصة والمسرح اللذين تصل من خلالهما إلى الناس.",
+  "position.body": "تعمل إل دي يونيك عند نقطة الالتقاء بين العلامات والمؤسسات والمشروعات الترفيهية والمواهب والجمهور. نراجع الملخص، نكشف الفرصة الأهم تحته، نضبطها على الثقافة التي ستعيش فيها، نصل الأشخاص القادرين على تحويلها إلى واقع، ثم نصوغ القصة والمسرح اللذين تصل من خلالهما إلى الناس.",
 
   "questions.kicker": "الأسئلة غير المريحة",
   "questions.title": "الأسئلة ليست مقدمة للعمل؛ كثيرًا ما تكون هي العمل نفسه.",
@@ -251,7 +259,7 @@ const ar = {
   "house.note": "دراسات مفاهيمية للأجواء · وليست صور أعمال سابقة للمؤسسين",
 
   "method.kicker": "منهجية LDU",
-  "method.title": "القصة + المسرح.",
+  "method.title": "القصة والمسرح.",
   "method.intro": "القصة هي المعنى: لماذا يجب أن يهتم الناس؟ والمسرح هو البيئة التي يتحول فيها هذا المعنى إلى تجربة حقيقية.",
   "method.storyTitle": "المعنى.",
   "method.storyBody": "ماذا تقول الفكرة فعلًا، ولماذا تستحق اهتمام الناس؟",

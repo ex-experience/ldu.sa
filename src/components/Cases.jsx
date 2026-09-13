@@ -15,7 +15,7 @@ const cases = [
     key: "pepsi",
     tag: "BRAND PARTNERSHIP",
     logo: `${BRAND_ROOT}/deema/pepsi.png`,
-    logoAlt: "Pepsi"
+    logoAlt: "Pepsi / Doritos"
   },
   {
     key: "jeddah",
@@ -35,7 +35,11 @@ export default function Cases() {
   const { t } = useI18n();
 
   return (
-    <section className="section cases-section founder-work-section" data-tone="light">
+    <section
+      className="section cases-section founder-work-section"
+      id="founder-work"
+      data-tone="light"
+    >
       <div data-reveal>
         <div className="section-kicker">{t("cases.kicker")}</div>
         <h2 className="section-title">{t("cases.title")}</h2>
@@ -43,22 +47,30 @@ export default function Cases() {
       </div>
 
       <div className="founder-work-grid" data-reveal>
-        {cases.map((item) => (
-          <article className="founder-work-card" key={item.key}>
-            <div className="founder-work-meta">
-              <span>{item.tag}</span>
-              <img
-                src={item.logo}
-                alt={item.logoAlt}
-                loading="lazy"
-                decoding="async"
-              />
-            </div>
+        {cases.map((item) => {
+          const title = t(`cases.${item.key}Title`);
 
-            <h3>{t(`cases.${item.key}Title`)}</h3>
-            <p>{t(`cases.${item.key}`)}</p>
-          </article>
-        ))}
+          return (
+            <article className="founder-work-card" key={item.key}>
+              <div className="founder-work-tag">{item.tag}</div>
+
+              <div className="founder-work-logo-lock" aria-label={title}>
+                <img
+                  src={item.logo}
+                  alt={item.logoAlt}
+                  loading="lazy"
+                  decoding="async"
+                />
+                <small>{title}</small>
+              </div>
+
+              <div className="founder-work-copy">
+                <h3>{title}</h3>
+                <p>{t(`cases.${item.key}`)}</p>
+              </div>
+            </article>
+          );
+        })}
       </div>
     </section>
   );

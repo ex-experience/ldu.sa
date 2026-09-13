@@ -6,9 +6,29 @@ const PHONE_LINK = "tel:+966540211883";
 const WHATSAPP_LINK = "https://wa.me/966540211883";
 const INSTAGRAM_LINK = "https://www.instagram.com/ladeuniqueco?stkn=M2FmOHVkOWQwMWN3";
 
-function ArrowIcon() {
-  return <span aria-hidden="true">↗</span>;
-}
+const cards = [
+  {
+    key: "whatsapp",
+    href: WHATSAPP_LINK,
+    labelKey: "contact.whatsapp",
+    value: PHONE_DISPLAY,
+    external: true
+  },
+  {
+    key: "call",
+    href: PHONE_LINK,
+    labelKey: "contact.call",
+    value: PHONE_DISPLAY,
+    external: false
+  },
+  {
+    key: "instagram",
+    href: INSTAGRAM_LINK,
+    labelKey: "contact.instagram",
+    value: "@ladeuniqueco",
+    external: true
+  }
+];
 
 export default function Contact() {
   const { t } = useI18n();
@@ -34,23 +54,18 @@ export default function Contact() {
         </div>
 
         <div className="quick-contact-grid" data-reveal>
-          <a className="quick-contact-card whatsapp" href={WHATSAPP_LINK} target="_blank" rel="noreferrer">
-            <span>{t("contact.whatsapp")}</span>
-            <strong>{PHONE_DISPLAY}</strong>
-            <ArrowIcon />
-          </a>
-
-          <a className="quick-contact-card call" href={PHONE_LINK}>
-            <span>{t("contact.call")}</span>
-            <strong>{PHONE_DISPLAY}</strong>
-            <ArrowIcon />
-          </a>
-
-          <a className="quick-contact-card instagram" href={INSTAGRAM_LINK} target="_blank" rel="noreferrer">
-            <span>{t("contact.instagram")}</span>
-            <strong>@ladeuniqueco</strong>
-            <ArrowIcon />
-          </a>
+          {cards.map((card) => (
+            <a
+              key={card.key}
+              className={`quick-contact-card ${card.key}`}
+              href={card.href}
+              target={card.external ? "_blank" : undefined}
+              rel={card.external ? "noreferrer" : undefined}
+            >
+              <span>{t(card.labelKey)}</span>
+              <strong dir="ltr">{card.value}</strong>
+            </a>
+          ))}
         </div>
       </div>
     </section>

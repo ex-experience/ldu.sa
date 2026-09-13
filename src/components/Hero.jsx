@@ -1,6 +1,6 @@
 import React from "react";
 import { useI18n } from "../i18n/I18nContext";
-import heroNight from "../../docs/media/hero-night.jpg";
+import ibexGold from "../assets/brand-kit/LDU_ibex_gold_attached.jpeg";
 import logoIvory from "../assets/brand-kit/LDU_logo_ivory_on_transparent.svg";
 
 export default function Hero() {
@@ -8,7 +8,7 @@ export default function Hero() {
 
   return (
     <section className="hero" id="top" data-tone="dark">
-      <img className="hero-image kenburns" src={heroNight} alt="" />
+      <img className="hero-image hero-ibex-image" src={ibexGold} alt="" />
       <div className="hero-shade" />
 
       <div className="hero-copy">
@@ -26,8 +26,8 @@ export default function Hero() {
         </div>
 
         <div className="hero-actions">
-          <a className="button fill" href="#method">{t("hero.ctaMethod")}</a>
-          <a className="button line" href="#house">{t("hero.ctaHouse")}</a>
+          <a className="button fill" href="#section-index">{t("index.kicker")}</a>
+          <a className="button line" href="#contact">{t("nav.contact")}</a>
         </div>
       </div>
 
