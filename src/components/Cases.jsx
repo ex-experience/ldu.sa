@@ -20,8 +20,8 @@ const cases = [
   {
     key: "jeddah",
     tag: "SEASONAL PROGRAM",
-    logo: `${BRAND_ROOT}/emran/jeddah-season.png`,
-    logoAlt: "Jeddah Season"
+    logo: `${import.meta.env.BASE_URL}assets/team-logos/emran/jeddah-2026.png`,
+    logoAlt: "Jeddah 2026"
   },
   {
     key: "mdl",

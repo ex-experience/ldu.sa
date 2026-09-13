@@ -3081,3 +3081,105 @@ html[dir="rtl"] .contact-section p {
   }
 }
 /* End compact journey to contact v1 */
+
+/* Four-point strict update v1 */
+.credential-carousel {
+  position: relative;
+  margin-top: clamp(1rem,2vw,1.6rem);
+  padding-top: .9rem;
+  border-top: 1px solid rgba(10,10,10,.14);
+  display: grid;
+  grid-template-columns: 36px minmax(0,1fr) 36px;
+  gap: 8px;
+  align-items: center;
+}
+.credential-carousel-track {
+  display: flex;
+  align-items: center;
+  gap: clamp(.8rem,2vw,1.25rem);
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: .45rem .25rem .55rem;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  overscroll-behavior-inline: contain;
+  -webkit-overflow-scrolling: touch;
+}
+.credential-carousel-track::-webkit-scrollbar { display: none; }
+.credential-carousel .credential-mark {
+  flex: 0 0 clamp(88px,30%,126px);
+  min-height: 72px;
+  display: grid;
+  place-items: center;
+  padding: .55rem;
+  scroll-snap-align: center;
+  border: 1px solid transparent;
+  border-radius: 14px;
+  opacity: .72;
+  transform: scale(.96);
+  transition: transform .3s cubic-bezier(.2,.7,.2,1), opacity .3s ease, border-color .3s ease, background .3s ease;
+}
+.credential-carousel .credential-mark.is-active {
+  opacity: 1;
+  transform: scale(1.04);
+  border-color: rgba(10,10,10,.12);
+  background: rgba(255,255,255,.34);
+}
+.credential-carousel .credential-mark img {
+  width: 100%;
+  max-width: 116px;
+  height: 54px;
+  object-fit: contain;
+  background: transparent;
+  filter: none;
+  transition: transform .3s ease, filter .3s ease;
+}
+.credential-carousel .credential-mark:hover img { transform: scale(1.06); filter: saturate(1.08); }
+.credential-control {
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  min-height: 36px;
+  border: 1px solid rgba(10,10,10,.18);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ink);
+  display: grid;
+  place-items: center;
+  padding: 0;
+  font-size: 1.25rem;
+  cursor: pointer;
+}
+.credential-control:hover,
+.credential-control:focus-visible {
+  background: var(--flame);
+  border-color: var(--flame);
+  color: var(--paper);
+}
+@media (pointer: coarse) {
+  .credential-carousel { grid-template-columns: 44px minmax(0,1fr) 44px; }
+  .credential-control { width:44px; height:44px; min-width:44px; min-height:44px; }
+}
+@media (max-width:520px) {
+  .credential-carousel { grid-template-columns: 40px minmax(0,1fr) 40px; gap:5px; }
+  .credential-carousel .credential-mark { flex-basis: 44%; }
+  .credential-carousel .credential-mark img { height:48px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .credential-carousel-track { scroll-behavior:auto; }
+  .credential-carousel .credential-mark,
+  .credential-carousel .credential-mark img { transition:none !important; }
+}
+.hero-ibex-image {
+  object-fit: cover !important;
+  object-position: 68% center !important;
+  transform: none !important;
+  animation: none !important;
+  filter: none !important;
+}
+@media (max-width:820px) {
+  .hero-ibex-image { object-position:72% center !important; }
+}
+/* End four-point strict update v1 */

@@ -1,6 +1,6 @@
 import React from "react";
 import { useI18n } from "../i18n/I18nContext";
-import ibexGold from "../assets/brand-kit/LDU_ibex_gold_attached.jpeg";
+import ibexRed from "../assets/brand-kit/LDU_ibex_red_2026.jpeg";
 import logoIvory from "../assets/brand-kit/LDU_logo_ivory_on_transparent.svg";
 
 export default function Hero() {
@@ -8,7 +8,7 @@ export default function Hero() {
 
   return (
     <section className="hero" id="top" data-tone="dark">
-      <img className="hero-image hero-ibex-image" src={ibexGold} alt="" />
+      <img className="hero-image hero-ibex-image" src={ibexRed} alt="" />
       <div className="hero-shade" />
 
       <div className="hero-copy">

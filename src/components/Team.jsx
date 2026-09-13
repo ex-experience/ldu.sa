@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useI18n } from "../i18n/I18nContext";
 
 const BASE = `${import.meta.env.BASE_URL}assets/team-logos`;
@@ -19,8 +19,8 @@ const deemaLogos = [
 
 const emranLogos = [
   { src: "https://cdn.jsdelivr.net/gh/ex-experience/ldu.lcc@99e6004ca55d82edb8598877c13f28ad6fa0d810/assets/brands/emran/netflix.png", alt: "Netflix" },
-  { src: "https://cdn.jsdelivr.net/gh/ex-experience/ldu.lcc@99e6004ca55d82edb8598877c13f28ad6fa0d810/assets/brands/emran/jeddah-season.png", alt: "Jeddah Season" },
-  { src: "https://cdn.jsdelivr.net/gh/ex-experience/ldu.lcc@99e6004ca55d82edb8598877c13f28ad6fa0d810/assets/brands/emran/level-up.png", alt: "Level Up" }
+  { src: `${BASE}/emran/jeddah-2026.png`, alt: "Jeddah 2026" },
+  { src: `${BASE}/emran/level-up-2026.png`, alt: "Level Up" }
 ];
 
 const saraLogos = [
@@ -40,28 +40,66 @@ const saraLogos = [
   { src: `${BASE}/sara/mawani.png`, alt: "Mawani" }
 ];
 
-function CredentialRail({ logos, speed = 28, label }) {
-  const doubled = [...logos, ...logos];
+function CredentialCarousel({ logos, label, interval = 2500 }) {
+  const railRef = useRef(null);
+  const [active, setActive] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const pointerInside = useRef(false);
+
+  const reveal = (index) => {
+    const count = logos.length;
+    const next = ((index % count) + count) % count;
+    setActive(next);
+    requestAnimationFrame(() => {
+      railRef.current?.children?.[next]?.scrollIntoView({
+        behavior: "smooth",
+        block: "nearest",
+        inline: "center"
+      });
+    });
+  };
+
+  useEffect(() => {
+    const reduced = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
+    if (paused || reduced || logos.length < 2) return undefined;
+    const timer = window.setInterval(() => {
+      setActive((current) => {
+        const next = (current + 1) % logos.length;
+        requestAnimationFrame(() => {
+          railRef.current?.children?.[next]?.scrollIntoView({
+            behavior: "smooth",
+            block: "nearest",
+            inline: "center"
+          });
+        });
+        return next;
+      });
+    }, interval);
+    return () => window.clearInterval(timer);
+  }, [interval, logos.length, paused]);
 
   return (
-    <div className="credential-rail" aria-label={label}>
-      <div className="credential-rail-mask">
-        <div
-          className="credential-rail-track"
-          style={{ "--credential-duration": `${speed}s` }}
-        >
-          {doubled.map((logo, index) => (
-            <span
-              className="credential-mark"
-              key={`${logo.alt}-${index}`}
-              title={logo.alt}
-              aria-hidden={index >= logos.length ? "true" : undefined}
-            >
-              <img src={logo.src} alt={index < logos.length ? logo.alt : ""} loading="lazy" decoding="async" />
-            </span>
-          ))}
-        </div>
+    <div
+      className={`credential-carousel ${paused ? "is-paused" : ""}`}
+      aria-label={label}
+      onPointerEnter={() => { pointerInside.current = true; setPaused(true); }}
+      onPointerLeave={() => { pointerInside.current = false; setPaused(false); }}
+      onFocusCapture={() => setPaused(true)}
+      onBlurCapture={() => { if (!pointerInside.current) setPaused(false); }}
+      onTouchStart={() => setPaused(true)}
+      onTouchEnd={() => window.setTimeout(() => setPaused(false), 1400)}
+    >
+      <button className="credential-control" type="button" aria-label={`Previous · ${label}`} onClick={() => reveal(active - 1)}>‹</button>
+
+      <div className="credential-carousel-track" ref={railRef} tabIndex="0">
+        {logos.map((logo, index) => (
+          <span className={`credential-mark ${index === active ? "is-active" : ""}`} key={logo.alt} title={logo.alt}>
+            <img src={logo.src} alt={logo.alt} loading="lazy" decoding="async" />
+          </span>
+        ))}
       </div>
+
+      <button className="credential-control" type="button" aria-label={`Next · ${label}`} onClick={() => reveal(active + 1)}>›</button>
     </div>
   );
 }
@@ -73,7 +111,6 @@ export default function Team() {
     <section className="section cream team" id="team" data-tone="light">
       <div data-reveal>
         <div className="section-kicker">{t("team.kicker")}</div>
-
         <div className="split-head">
           <h2>{t("team.title")}</h2>
           <p className="lead">{t("team.body")}</p>
@@ -86,7 +123,7 @@ export default function Team() {
           <h3>{t("team.deema")}</h3>
           <strong>{t("team.deemaRole")}</strong>
           <p>{t("team.deemaBody")}</p>
-          <CredentialRail logos={deemaLogos} speed={34} label={`${t("team.deema")} · ${t("team.priorLabel")}`} />
+          <CredentialCarousel logos={deemaLogos} interval={2400} label={`${t("team.deema")} · ${t("team.priorLabel")}`} />
         </article>
 
         <article className="founder-card credential-profile-card">
@@ -94,7 +131,7 @@ export default function Team() {
           <h3>{t("team.emran")}</h3>
           <strong>{t("team.emranRole")}</strong>
           <p>{t("team.emranBody")}</p>
-          <CredentialRail logos={emranLogos} speed={16} label={`${t("team.emran")} · ${t("team.priorLabel")}`} />
+          <CredentialCarousel logos={emranLogos} interval={2100} label={`${t("team.emran")} · ${t("team.priorLabel")}`} />
         </article>
 
         <article className="founder-card credential-profile-card team-card-sara">
@@ -102,7 +139,7 @@ export default function Team() {
           <h3>{t("team.sara")}</h3>
           <strong>{t("team.saraRole")}</strong>
           <p>{t("team.saraBody")}</p>
-          <CredentialRail logos={saraLogos} speed={40} label={`${t("team.sara")} · ${t("team.priorLabel")}`} />
+          <CredentialCarousel logos={saraLogos} interval={2600} label={`${t("team.sara")} · ${t("team.priorLabel")}`} />
         </article>
       </div>
 
