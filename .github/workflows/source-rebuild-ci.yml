@@ -7,34 +7,61 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
+
+concurrency:
+  group: ldu-source-rebuild-ci
+  cancel-in-progress: true
 
 jobs:
   build-and-visual-qa:
     runs-on: ubuntu-latest
     timeout-minutes: 18
+    permissions:
+      contents: read
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          persist-credentials: false
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "22"
+          cache: npm
 
-      - name: Install dependencies
-        run: npm install --no-audit --no-fund
+      - name: Install locked dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Audit production dependencies
+        run: npm audit --omit=dev --audit-level=high
 
       - name: Build
         run: npm run build
+
+      - name: Assert production sourcemaps are absent
+        run: |
+          if find dist -type f -name '*.map' | grep -q .; then
+            echo "Production sourcemaps must not be published."
+            find dist -type f -name '*.map'
+            exit 1
+          fi
+
+      - name: Assert external runtime asset CDNs are absent
+        run: |
+          if grep -RIE 'fonts\.googleapis\.com|fonts\.gstatic\.com|cdn\.jsdelivr\.net' dist; then
+            echo "External runtime font/CDN dependency detected."
+            exit 1
+          fi
 
       - name: Install Chromium for visual QA
         run: npx playwright install --with-deps chromium
 
       - name: Start preview server
         run: |
-          npm run preview -- --host 127.0.0.1 --port 4173 > /tmp/ldu-preview.log 2>&1 &
+          npm run preview -- --host 127.0.0.1 --port 4173 --strictPort > /tmp/ldu-preview.log 2>&1 &
           for i in {1..30}; do
             if curl -fsS http://127.0.0.1:4173/ldu.sa/ > /dev/null; then
               exit 0
@@ -44,7 +71,7 @@ jobs:
           cat /tmp/ldu-preview.log
           exit 1
 
-      - name: Capture visual QA
+      - name: Capture visual and interaction QA
         run: npm run visual-qa
 
       - name: Generate standalone public preview
@@ -64,9 +91,35 @@ jobs:
           path: visual-qa/
           if-no-files-found: error
 
+      - name: Upload standalone preview
+        uses: actions/upload-artifact@v4
+        with:
+          name: ldu-standalone-preview
+          path: preview/index.html
+          if-no-files-found: error
+
+  publish-preview:
+    needs: build-and-visual-qa
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository for preview publication
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Download validated standalone preview
+        uses: actions/download-artifact@v4
+        with:
+          name: ldu-standalone-preview
+          path: preview-artifact
+
       - name: Publish preview-build branch
         run: |
-          cp preview/index.html /tmp/ldu-preview-index.html
+          cp preview-artifact/index.html /tmp/ldu-preview-index.html
 
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"

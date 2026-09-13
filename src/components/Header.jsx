@@ -5,7 +5,6 @@ import logoOnyx from "../assets/brand-kit/LDU_logo_onyx_on_transparent.svg";
 
 const nav = [
   ["#position", "nav.position"],
-
   ["#method", "nav.method"],
   ["#services", "nav.services"],
   ["#proof", "nav.proof"],
@@ -20,9 +19,16 @@ export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [tone, setTone] = useState("dark");
 
+  const legal = new URLSearchParams(window.location.search).get("legal");
+  const isLegalPage = legal === "privacy" || legal === "terms";
+
+  const resolveNavHref = (href) =>
+    isLegalPage ? `${import.meta.env.BASE_URL}${href}` : href;
+
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 48);
     onScroll();
+
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
@@ -35,21 +41,28 @@ export default function Header() {
       (entries) => {
         const visible = entries
           .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)[0];
+          .sort(
+            (a, b) =>
+              a.boundingClientRect.top - b.boundingClientRect.top
+          )[0];
 
         if (visible?.target?.dataset?.tone) {
           setTone(visible.target.dataset.tone);
         }
       },
-      { rootMargin: "-12% 0px -70% 0px", threshold: 0 }
+      {
+        rootMargin: "-12% 0px -70% 0px",
+        threshold: 0
+      }
     );
 
     sections.forEach((section) => observer.observe(section));
     return () => observer.disconnect();
-  }, []);
+  }, [isLegalPage]);
 
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "";
+
     return () => {
       document.body.style.overflow = "";
     };
@@ -57,21 +70,37 @@ export default function Header() {
 
   return (
     <>
-      <a className="skip-link" href="#main">{t("a11y.skip")}</a>
+      <a className="skip-link" href="#main">
+        {t("a11y.skip")}
+      </a>
 
       <header
         className={`topbar ${scrolled ? "topbar-solid" : ""} ${
           tone === "light" ? "topbar-light" : "topbar-dark"
         }`}
       >
-        <a className="brand-button brand-wordmark" href={import.meta.env.BASE_URL} aria-label="LDU home">
-          <img className="brand-logo brand-logo-ivory" src={logoIvory} alt="LDU" />
-          <img className="brand-logo brand-logo-onyx" src={logoOnyx} alt="LDU" />
+        <a
+          className="brand-button brand-wordmark"
+          href={import.meta.env.BASE_URL}
+          aria-label="LDU home"
+        >
+          <img
+            className="brand-logo brand-logo-ivory"
+            src={logoIvory}
+            alt="LDU"
+          />
+          <img
+            className="brand-logo brand-logo-onyx"
+            src={logoOnyx}
+            alt="LDU"
+          />
         </a>
 
         <nav className="desktop-nav" aria-label="Primary">
           {nav.map(([href, key]) => (
-            <a key={href} href={href}>{t(key)}</a>
+            <a key={href} href={resolveNavHref(href)}>
+              {t(key)}
+            </a>
           ))}
         </nav>
 
@@ -82,7 +111,7 @@ export default function Header() {
               className="pill-button language-trigger"
               aria-expanded={langOpen}
               aria-haspopup="listbox"
-              onClick={() => setLangOpen((v) => !v)}
+              onClick={() => setLangOpen((value) => !value)}
             >
               <span>{languages[lang].label}</span>
             </button>
@@ -110,10 +139,12 @@ export default function Header() {
 
           <button
             type="button"
-            className={`pill-button mobile-menu-button ${menuOpen ? "is-open" : ""}`}
+            className={`pill-button mobile-menu-button ${
+              menuOpen ? "is-open" : ""
+            }`}
             aria-expanded={menuOpen}
             aria-label={t(menuOpen ? "nav.close" : "nav.menu")}
-            onClick={() => setMenuOpen((v) => !v)}
+            onClick={() => setMenuOpen((value) => !value)}
           >
             <span className="menu-glyph" aria-hidden="true">
               <i />
@@ -131,16 +162,24 @@ export default function Header() {
             aria-label={t("nav.close")}
             onClick={() => setMenuOpen(false)}
           />
+
           <nav>
             <div className="mobile-menu-head">
               <img src={logoIvory} alt="LDU" />
-              <button type="button" onClick={() => setMenuOpen(false)}>
+              <button
+                type="button"
+                onClick={() => setMenuOpen(false)}
+              >
                 {t("nav.close")}
               </button>
             </div>
 
             {nav.map(([href, key]) => (
-              <a key={href} href={href} onClick={() => setMenuOpen(false)}>
+              <a
+                key={href}
+                href={resolveNavHref(href)}
+                onClick={() => setMenuOpen(false)}
+              >
                 <strong>{t(key)}</strong>
               </a>
             ))}

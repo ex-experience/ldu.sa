@@ -1,32 +1,27 @@
 import React from "react";
 import { useI18n } from "../i18n/I18nContext";
 
-const BRAND_ROOT =
-  "https://cdn.jsdelivr.net/gh/ex-experience/ldu.lcc@99e6004ca55d82edb8598877c13f28ad6fa0d810/assets/brands";
+const BASE = `${import.meta.env.BASE_URL}assets/team-logos`;
 
 const cases = [
   {
     key: "netflix",
-    tag: "GLOBAL ENTERTAINMENT",
-    logo: `${BRAND_ROOT}/emran/netflix.png`,
+    logo: `${BASE}/emran/netflix.png`,
     logoAlt: "Netflix"
   },
   {
     key: "pepsi",
-    tag: "BRAND PARTNERSHIP",
-    logo: `${BRAND_ROOT}/deema/pepsi.png`,
+    logo: `${BASE}/deema/pepsi.png`,
     logoAlt: "Pepsi / Doritos"
   },
   {
     key: "jeddah",
-    tag: "SEASONAL PROGRAM",
-    logo: `${import.meta.env.BASE_URL}assets/team-logos/emran/jeddah-2026.png`,
+    logo: `${BASE}/emran/jeddah-2026.png`,
     logoAlt: "Jeddah 2026"
   },
   {
     key: "mdl",
-    tag: "LIVE ENTERTAINMENT",
-    logo: `${BRAND_ROOT}/deema/mdlbeast.png`,
+    logo: `${BASE}/deema/mdlbeast.png`,
     logoAlt: "MDLBEAST"
   }
 ];
@@ -52,9 +47,14 @@ export default function Cases() {
 
           return (
             <article className="founder-work-card" key={item.key}>
-              <div className="founder-work-tag">{item.tag}</div>
+              <div className="founder-work-tag">
+                {t(`cases.${item.key}Tag`)}
+              </div>
 
-              <div className="founder-work-logo-lock" aria-label={title}>
+              <div
+                className="founder-work-logo-lock"
+                aria-label={title}
+              >
                 <img
                   src={item.logo}
                   alt={item.logoAlt}

@@ -18,7 +18,7 @@ const deemaLogos = [
 ];
 
 const emranLogos = [
-  { src: "https://cdn.jsdelivr.net/gh/ex-experience/ldu.lcc@99e6004ca55d82edb8598877c13f28ad6fa0d810/assets/brands/emran/netflix.png", alt: "Netflix" },
+  { src: `${BASE}/emran/netflix.png`, alt: "Netflix" },
   { src: `${BASE}/emran/jeddah-2026.png`, alt: "Jeddah 2026" },
   { src: `${BASE}/emran/level-up-2026.png`, alt: "Level Up" }
 ];
@@ -40,66 +40,217 @@ const saraLogos = [
   { src: `${BASE}/sara/mawani.png`, alt: "Mawani" }
 ];
 
-function CredentialCarousel({ logos, label, interval = 2500 }) {
+function CredentialCarousel({
+  logos,
+  label,
+  previousLabel,
+  nextLabel,
+  interval = 2500
+}) {
+  const rootRef = useRef(null);
   const railRef = useRef(null);
+  const scrollFrame = useRef(0);
+  const resumeTimer = useRef(0);
+
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
-  const pointerInside = useRef(false);
+  const [inView, setInView] = useState(false);
 
-  const reveal = (index) => {
+  const centerItem = (index, behavior = "smooth") => {
+    const rail = railRef.current;
+    const item = rail?.children?.[index];
+
+    if (!rail || !item) return;
+
+    const left =
+      item.offsetLeft - (rail.clientWidth - item.clientWidth) / 2;
+
+    rail.scrollTo({
+      left: Math.max(0, left),
+      top: 0,
+      behavior
+    });
+  };
+
+  const reveal = (index, behavior = "smooth") => {
     const count = logos.length;
     const next = ((index % count) + count) % count;
+
     setActive(next);
+
     requestAnimationFrame(() => {
-      railRef.current?.children?.[next]?.scrollIntoView({
-        behavior: "smooth",
-        block: "nearest",
-        inline: "center"
-      });
+      centerItem(next, behavior);
     });
   };
 
   useEffect(() => {
-    const reduced = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
-    if (paused || reduced || logos.length < 2) return undefined;
+    const node = rootRef.current;
+    if (!node || !("IntersectionObserver" in window)) {
+      setInView(true);
+      return undefined;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setInView(
+          Boolean(entry?.isIntersecting) &&
+          (entry?.intersectionRatio ?? 0) >= 0.18
+        );
+      },
+      {
+        threshold: [0, 0.18, 0.5, 1],
+        rootMargin: "0px 0px -4% 0px"
+      }
+    );
+
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const reduced =
+      window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
+
+    if (
+      !inView ||
+      paused ||
+      reduced ||
+      document.hidden ||
+      logos.length < 2
+    ) {
+      return undefined;
+    }
+
     const timer = window.setInterval(() => {
       setActive((current) => {
         const next = (current + 1) % logos.length;
+
         requestAnimationFrame(() => {
-          railRef.current?.children?.[next]?.scrollIntoView({
-            behavior: "smooth",
-            block: "nearest",
-            inline: "center"
-          });
+          centerItem(next, "smooth");
         });
+
         return next;
       });
     }, interval);
+
     return () => window.clearInterval(timer);
-  }, [interval, logos.length, paused]);
+  }, [inView, interval, logos.length, paused]);
+
+  useEffect(() => {
+    return () => {
+      if (scrollFrame.current) {
+        cancelAnimationFrame(scrollFrame.current);
+      }
+      if (resumeTimer.current) {
+        window.clearTimeout(resumeTimer.current);
+      }
+    };
+  }, []);
+
+  const syncActiveToScroll = () => {
+    if (scrollFrame.current) return;
+
+    scrollFrame.current = requestAnimationFrame(() => {
+      scrollFrame.current = 0;
+
+      const rail = railRef.current;
+      if (!rail || !rail.children.length) return;
+
+      const center = rail.scrollLeft + rail.clientWidth / 2;
+      let nearestIndex = 0;
+      let nearestDistance = Number.POSITIVE_INFINITY;
+
+      [...rail.children].forEach((item, index) => {
+        const itemCenter = item.offsetLeft + item.clientWidth / 2;
+        const distance = Math.abs(itemCenter - center);
+
+        if (distance < nearestDistance) {
+          nearestDistance = distance;
+          nearestIndex = index;
+        }
+      });
+
+      setActive(nearestIndex);
+    });
+  };
+
+  const pauseForTouch = () => {
+    if (resumeTimer.current) {
+      window.clearTimeout(resumeTimer.current);
+    }
+    setPaused(true);
+  };
+
+  const resumeAfterTouch = () => {
+    if (resumeTimer.current) {
+      window.clearTimeout(resumeTimer.current);
+    }
+
+    resumeTimer.current = window.setTimeout(() => {
+      setPaused(false);
+    }, 1400);
+  };
 
   return (
     <div
       className={`credential-carousel ${paused ? "is-paused" : ""}`}
+      ref={rootRef}
+      role="region"
+      aria-roledescription="carousel"
       aria-label={label}
-      onPointerEnter={() => { pointerInside.current = true; setPaused(true); }}
-      onPointerLeave={() => { pointerInside.current = false; setPaused(false); }}
+      data-in-view={inView ? "true" : "false"}
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
       onFocusCapture={() => setPaused(true)}
-      onBlurCapture={() => { if (!pointerInside.current) setPaused(false); }}
-      onTouchStart={() => setPaused(true)}
-      onTouchEnd={() => window.setTimeout(() => setPaused(false), 1400)}
+      onBlurCapture={(event) => {
+        if (!event.currentTarget.contains(event.relatedTarget)) {
+          setPaused(false);
+        }
+      }}
+      onTouchStart={pauseForTouch}
+      onTouchEnd={resumeAfterTouch}
+      onTouchCancel={resumeAfterTouch}
     >
-      <button className="credential-control" type="button" aria-label={`Previous · ${label}`} onClick={() => reveal(active - 1)}>‹</button>
+      <button
+        className="credential-control credential-control-prev"
+        type="button"
+        aria-label={`${previousLabel} · ${label}`}
+        onClick={() => reveal(active - 1)}
+      >
+        ‹
+      </button>
 
-      <div className="credential-carousel-track" ref={railRef} tabIndex="0">
+      <div
+        className="credential-carousel-track"
+        ref={railRef}
+        tabIndex="0"
+        onScroll={syncActiveToScroll}
+      >
         {logos.map((logo, index) => (
-          <span className={`credential-mark ${index === active ? "is-active" : ""}`} key={logo.alt} title={logo.alt}>
-            <img src={logo.src} alt={logo.alt} loading="lazy" decoding="async" />
+          <span
+            className={`credential-mark ${index === active ? "is-active" : ""}`}
+            key={logo.alt}
+            title={logo.alt}
+            aria-current={index === active ? "true" : undefined}
+          >
+            <img
+              src={logo.src}
+              alt={logo.alt}
+              loading="lazy"
+              decoding="async"
+            />
           </span>
         ))}
       </div>
 
-      <button className="credential-control" type="button" aria-label={`Next · ${label}`} onClick={() => reveal(active + 1)}>›</button>
+      <button
+        className="credential-control credential-control-next"
+        type="button"
+        aria-label={`${nextLabel} · ${label}`}
+        onClick={() => reveal(active + 1)}
+      >
+        ›
+      </button>
     </div>
   );
 }
@@ -107,10 +258,16 @@ function CredentialCarousel({ logos, label, interval = 2500 }) {
 export default function Team() {
   const { t } = useI18n();
 
+  const carouselProps = {
+    previousLabel: t("a11y.previous"),
+    nextLabel: t("a11y.next")
+  };
+
   return (
     <section className="section cream team" id="team" data-tone="light">
       <div data-reveal>
         <div className="section-kicker">{t("team.kicker")}</div>
+
         <div className="split-head">
           <h2>{t("team.title")}</h2>
           <p className="lead">{t("team.body")}</p>
@@ -123,7 +280,13 @@ export default function Team() {
           <h3>{t("team.deema")}</h3>
           <strong>{t("team.deemaRole")}</strong>
           <p>{t("team.deemaBody")}</p>
-          <CredentialCarousel logos={deemaLogos} interval={2400} label={`${t("team.deema")} · ${t("team.priorLabel")}`} />
+
+          <CredentialCarousel
+            {...carouselProps}
+            logos={deemaLogos}
+            interval={2400}
+            label={`${t("team.deema")} · ${t("team.priorLabel")}`}
+          />
         </article>
 
         <article className="founder-card credential-profile-card">
@@ -131,7 +294,13 @@ export default function Team() {
           <h3>{t("team.emran")}</h3>
           <strong>{t("team.emranRole")}</strong>
           <p>{t("team.emranBody")}</p>
-          <CredentialCarousel logos={emranLogos} interval={2100} label={`${t("team.emran")} · ${t("team.priorLabel")}`} />
+
+          <CredentialCarousel
+            {...carouselProps}
+            logos={emranLogos}
+            interval={2100}
+            label={`${t("team.emran")} · ${t("team.priorLabel")}`}
+          />
         </article>
 
         <article className="founder-card credential-profile-card team-card-sara">
@@ -139,11 +308,19 @@ export default function Team() {
           <h3>{t("team.sara")}</h3>
           <strong>{t("team.saraRole")}</strong>
           <p>{t("team.saraBody")}</p>
-          <CredentialCarousel logos={saraLogos} interval={2600} label={`${t("team.sara")} · ${t("team.priorLabel")}`} />
+
+          <CredentialCarousel
+            {...carouselProps}
+            logos={saraLogos}
+            interval={2600}
+            label={`${t("team.sara")} · ${t("team.priorLabel")}`}
+          />
         </article>
       </div>
 
-      <p className="attribution team-credentials-note">{t("team.credentialsNote")}</p>
+      <p className="attribution team-credentials-note">
+        {t("team.credentialsNote")}
+      </p>
     </section>
   );
 }

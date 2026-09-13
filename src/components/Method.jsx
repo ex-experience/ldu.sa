@@ -19,13 +19,13 @@ export default function Method() {
 
       <div className="story-stage" data-reveal>
         <article>
-          <small>STORY</small>
+          <small>{t("method.storyLabel")}</small>
           <h3>{t("method.storyTitle")}</h3>
           <p>{t("method.storyBody")}</p>
         </article>
 
         <article>
-          <small>STAGE</small>
+          <small>{t("method.stageLabel")}</small>
           <h3>{t("method.stageTitle")}</h3>
           <p>{t("method.stageBody")}</p>
         </article>

@@ -12,22 +12,24 @@ export default function Hero() {
       <div className="hero-shade" />
 
       <div className="hero-copy">
-        <p className="eyebrow">{t("hero.meta")}</p>
+        <div className="hero-brand-hierarchy">
+          <strong className="hero-brand-top">LDU</strong>
+          <p className="eyebrow hero-company-line">{t("hero.meta")}</p>
+        </div>
 
-        <h1>
+        <h1 className="hero-statement">
           <span>{t("hero.l1")}</span>
           <span className="flame">{t("hero.l2")}</span>
           <span>{t("hero.l3")}</span>
         </h1>
 
-        <div className="purpose">
-          <span>{t("hero.purposeLabel")}</span>
-          <p>{t("hero.purpose")}</p>
-        </div>
-
         <div className="hero-actions">
-          <a className="button fill" href="#position">{t("nav.position")}</a>
-          <a className="button line" href="#contact">{t("nav.contact")}</a>
+          <a className="button fill" href="#position">
+            {t("nav.position")}
+          </a>
+          <a className="button line" href="#contact">
+            {t("nav.contact")}
+          </a>
         </div>
       </div>
 
@@ -36,7 +38,10 @@ export default function Hero() {
         <span>{t("hero.rail")}</span>
       </div>
 
-      <div className="scroll-cue"><i />{t("hero.scroll")}</div>
+      <div className="scroll-cue">
+        <i />
+        {t("hero.scroll")}
+      </div>
     </section>
   );
 }

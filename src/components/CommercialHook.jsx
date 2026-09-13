@@ -1,8 +1,7 @@
 import React from "react";
 import { useI18n } from "../i18n/I18nContext";
 
-const ASSET_ROOT =
-  "https://cdn.jsdelivr.net/gh/ex-experience/ldu.lcc@99e6004ca55d82edb8598877c13f28ad6fa0d810/assets/editorial";
+const ASSET_ROOT = `${import.meta.env.BASE_URL}assets/editorial`;
 
 const frames = [
   `${ASSET_ROOT}/ulba-story-01.webp`,
@@ -51,7 +50,11 @@ export default function CommercialHook() {
   const c = copy[lang] || copy.en;
 
   return (
-    <section className="commercial-hook" data-tone="dark" aria-labelledby="commercial-hook-title">
+    <section
+      className="commercial-hook"
+      data-tone="dark"
+      aria-labelledby="commercial-hook-title"
+    >
       <div className="commercial-hook-head" data-reveal>
         <div>
           <p className="commercial-kicker">{c.kicker}</p>
@@ -60,15 +63,24 @@ export default function CommercialHook() {
 
         <div className="commercial-hook-copy">
           <p>{c.body}</p>
-          <span className="commercial-swipe-cue">{c.cue} →</span>
+          <span className="commercial-swipe-cue">
+            {c.cue} →
+          </span>
         </div>
       </div>
 
       <div className="commercial-rail" data-reveal>
         {frames.map((src) => (
           <figure className="commercial-frame" key={src}>
-            <img src={src} alt="" loading="lazy" decoding="async" />
-            <figcaption><span>{c.frame}</span></figcaption>
+            <img
+              src={src}
+              alt=""
+              loading="lazy"
+              decoding="async"
+            />
+            <figcaption>
+              <span>{c.frame}</span>
+            </figcaption>
           </figure>
         ))}
       </div>
