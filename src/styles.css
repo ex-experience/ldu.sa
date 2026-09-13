@@ -2617,3 +2617,10 @@ html[dir="rtl"] .quick-contact-card {
   transform: scaleX(1) !important;
 }
 /* End gold ibex right-facing lock v2 */
+
+/* LDU right-facing gold ibex lock */
+.hero-ibex-image,
+img[src*="LDU_ibex_gold_attached"] {
+  transform: scaleX(1) !important;
+}
+/* End LDU right-facing gold ibex lock */
