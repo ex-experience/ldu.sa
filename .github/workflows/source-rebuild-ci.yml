@@ -74,10 +74,7 @@ jobs:
       - name: Capture visual and interaction QA
         run: npm run visual-qa
 
-      - name: Generate standalone public preview
-        run: node scripts/build-standalone-preview.mjs
-
-      - name: Upload production build
+      - name: Upload validated preview bundle
         uses: actions/upload-artifact@v4
         with:
           name: ldu-source-rebuild-dist
@@ -89,13 +86,6 @@ jobs:
         with:
           name: ldu-visual-qa
           path: visual-qa/
-          if-no-files-found: error
-
-      - name: Upload standalone preview
-        uses: actions/upload-artifact@v4
-        with:
-          name: ldu-standalone-preview
-          path: preview/index.html
           if-no-files-found: error
 
   publish-preview:
@@ -111,15 +101,30 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Download validated standalone preview
+      - name: Download validated preview bundle
         uses: actions/download-artifact@v4
         with:
-          name: ldu-standalone-preview
+          name: ldu-source-rebuild-dist
           path: preview-artifact
 
       - name: Publish preview-build branch
         run: |
-          cp preview-artifact/index.html /tmp/ldu-preview-index.html
+          rm -rf /tmp/ldu-preview-dist
+          mkdir -p /tmp/ldu-preview-dist
+          cp -a preview-artifact/. /tmp/ldu-preview-dist/
+
+          test -f /tmp/ldu-preview-dist/index.html
+          test -d /tmp/ldu-preview-dist/assets
+
+          if find /tmp/ldu-preview-dist -type f -name '*.map' | grep -q .; then
+            echo "Preview bundle unexpectedly contains sourcemaps."
+            exit 1
+          fi
+
+          if grep -RIE 'fonts\.googleapis\.com|fonts\.gstatic\.com|cdn\.jsdelivr\.net' /tmp/ldu-preview-dist; then
+            echo "Preview bundle unexpectedly contains an external runtime CDN reference."
+            exit 1
+          fi
 
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -127,10 +132,11 @@ jobs:
           git checkout --orphan preview-build-temp
           git rm -rf .
 
-          cp /tmp/ldu-preview-index.html index.html
+          cp -a /tmp/ldu-preview-dist/. .
+          cp index.html 404.html
           touch .nojekyll
 
-          git add index.html .nojekyll
+          git add -A
           git commit -m "Publish LDU preview for ${GITHUB_SHA}"
           git branch -M preview-build
           git push --force origin preview-build
