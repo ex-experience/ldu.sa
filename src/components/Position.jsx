@@ -6,6 +6,7 @@ const questions = [1, 2, 3, 4];
 
 export default function Position() {
   const { t } = useI18n();
+  const positionParagraphs = t("position.body").split("\n\n");
 
   return (
     <>
@@ -13,9 +14,20 @@ export default function Position() {
         <div data-reveal>
           <div className="section-kicker">{t("position.kicker")}</div>
 
-          <div className="position-grid">
+          <div className="position-grid position-grid-editorial">
             <h2>{t("position.title")}</h2>
-            <p className="lead">{t("position.body")}</p>
+
+            <div className="position-copy">
+              {positionParagraphs.map((paragraph, index) => (
+                <p
+                  className={`lead ${index === 0 ? "position-statement" : ""}`}
+                  key={`${index}-${paragraph.slice(0, 18)}`}
+                >
+                  {paragraph}
+                </p>
+              ))}
+            </div>
+
             <img className="watermark wordmark-watermark" src={logoOnyx} alt="" />
           </div>
         </div>

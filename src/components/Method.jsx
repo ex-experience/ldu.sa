@@ -34,12 +34,24 @@ export default function Method() {
       <blockquote data-reveal>{t("method.quote")}</blockquote>
 
       <div className="method-grid no-number-grid" data-reveal>
-        {steps.map((key) => (
-          <article key={key}>
-            <h3>{t(`method.${key}`)}</h3>
-            <p>{t(`method.${key}Body`)}</p>
-          </article>
-        ))}
+        {steps.map((key) => {
+          const paragraphs = t(`method.${key}Body`).split("\n\n");
+          return (
+            <article key={key}>
+              <h3>{t(`method.${key}`)}</h3>
+              <div className="method-step-copy">
+                {paragraphs.map((paragraph, index) => (
+                  <p
+                    className={index > 0 ? "method-conclusion" : ""}
+                    key={`${key}-${index}`}
+                  >
+                    {paragraph}
+                  </p>
+                ))}
+              </div>
+            </article>
+          );
+        })}
       </div>
     </section>
   );

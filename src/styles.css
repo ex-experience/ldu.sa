@@ -3279,3 +3279,90 @@ html[dir="rtl"] .hero-brand-top {
 }
 
 /* End production hardening v1 */
+
+
+/* LDU urgent content + brand lockup update — 2026-09-14 */
+
+.position-grid-editorial {
+  align-items: start;
+}
+
+.position-copy {
+  display: grid;
+  gap: 1.15rem;
+  align-self: end;
+}
+
+.position-copy .lead {
+  margin: 0;
+}
+
+.position-copy .position-statement {
+  color: var(--flame);
+  font-weight: 800;
+  font-size: clamp(22px, 2.25vw, 34px);
+  line-height: 1.25;
+}
+
+.method-step-copy {
+  display: grid;
+  gap: .9rem;
+}
+
+.method-step-copy p {
+  margin: 0;
+}
+
+.method-step-copy .method-conclusion {
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.brand-wordmark {
+  width: clamp(124px, 12vw, 174px);
+}
+
+.brand-wordmark .brand-logo {
+  width: 100% !important;
+  height: 44px !important;
+  filter: none !important;
+}
+
+.mobile-menu-head img {
+  width: 152px !important;
+  height: auto !important;
+  filter: none !important;
+}
+
+.footer-brand img {
+  width: clamp(190px, 22vw, 280px) !important;
+  height: auto !important;
+  filter: none !important;
+}
+
+.wordmark-watermark {
+  filter: none !important;
+}
+
+@media (max-width: 820px) {
+  .brand-wordmark {
+    width: 132px;
+    min-width: 132px;
+  }
+
+  .brand-wordmark .brand-logo {
+    height: 42px !important;
+  }
+
+  .mobile-menu-head img {
+    width: 138px !important;
+  }
+
+  .footer-brand img {
+    width: min(64vw, 238px) !important;
+  }
+
+  .position-copy {
+    gap: 1rem;
+  }
+}

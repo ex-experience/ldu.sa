@@ -92,7 +92,8 @@ export default function Header() {
           <img
             className="brand-logo brand-logo-onyx"
             src={logoOnyx}
-            alt="LDU"
+            alt=""
+            aria-hidden="true"
           />
         </a>
 
