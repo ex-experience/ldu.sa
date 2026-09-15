@@ -7,7 +7,6 @@ import Position from "./components/Position";
 import Method from "./components/Method";
 import Services from "./components/Services";
 import Proof from "./components/Proof";
-import Cases from "./components/Cases";
 import Team from "./components/Team";
 import CommercialHook from "./components/CommercialHook";
 import Contact from "./components/Contact";
@@ -59,7 +58,6 @@ export default function App() {
           <Method />
           <Services />
           <Proof />
-          <Cases />
           <Team />
           <CommercialHook />
           <Contact />
