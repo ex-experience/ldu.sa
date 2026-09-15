@@ -48,8 +48,6 @@ export default function Contact() {
             <span>{t("contact.locationLabel")}</span>
             <strong>{t("contact.location")}</strong>
 
-            <span>{t("contact.phoneLabel")}</span>
-            <a href={PHONE_LINK} dir="ltr">{PHONE_DISPLAY}</a>
           </aside>
         </div>
 
