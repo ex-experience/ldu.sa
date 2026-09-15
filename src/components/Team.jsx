@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useI18n } from "../i18n/I18nContext";
+import "./TeamLogoCarousel.css";
 
 const BASE = `${import.meta.env.BASE_URL}assets/team-logos`;
 

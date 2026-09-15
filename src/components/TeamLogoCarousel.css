@@ -1,0 +1,82 @@
+/*
+  LDU team credential carousel polish
+  Exact visual scale target: +20% versus the previous carousel logo geometry.
+  Previous -> new:
+    max-width 116px -> 139.2px
+    height 54px -> 64.8px
+    mobile height 48px -> 57.6px
+    flex-basis clamp(88px,30%,126px) -> clamp(105.6px,36%,151.2px)
+
+  The active logo no longer receives a white card/background.
+  Existing React autoplay, swipe, focus/touch pause, IntersectionObserver,
+  RTL-safe controls and reduced-motion behavior remain intact.
+*/
+
+.credential-carousel .credential-mark {
+  flex: 0 0 clamp(105.6px, 36%, 151.2px);
+  min-height: 86.4px;
+  padding: .35rem;
+  background: transparent !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+
+.credential-carousel .credential-mark.is-active {
+  background: transparent !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+  transform: scale(1.04);
+}
+
+.credential-carousel .credential-mark img {
+  width: 100%;
+  max-width: 139.2px;
+  height: 64.8px;
+  object-fit: contain;
+  object-position: center;
+  background: transparent !important;
+  filter: none;
+}
+
+.credential-carousel-track {
+  scroll-padding-inline: .5rem;
+}
+
+@media (pointer: coarse) {
+  .credential-carousel .credential-mark {
+    min-height: 91.2px;
+  }
+}
+
+@media (max-width: 520px) {
+  .credential-carousel {
+    grid-template-columns: 44px minmax(0, 1fr) 44px;
+    gap: 5px;
+  }
+
+  .credential-carousel-track {
+    gap: .65rem;
+    scroll-padding-inline: .35rem;
+  }
+
+  .credential-carousel .credential-mark {
+    flex-basis: 52.8%;
+    min-height: 91.2px;
+    padding: .2rem;
+  }
+
+  .credential-carousel .credential-mark img {
+    max-width: 139.2px;
+    height: 57.6px;
+  }
+}
+
+@media (max-width: 390px) {
+  .credential-carousel .credential-mark {
+    flex-basis: 54%;
+  }
+
+  .credential-carousel .credential-mark img {
+    height: 56px;
+  }
+}
