@@ -278,7 +278,7 @@ export const dictionaries = {
     "contact.call": "اتصال",
     "contact.whatsapp": "واتساب",
     "contact.instagram": "إنستغرام",
-    "footer.line": "اسأل السؤال غير المريح. واجعل الإجابة تنتمي.",
+    "footer.line": "روح التجربه، قفزة ثقافية.",
     "footer.location": "LDU, LLC · الرياض، المملكة العربية السعودية",
     "footer.privacy": "الخصوصية",
     "footer.terms": "الشروط",
