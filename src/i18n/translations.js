@@ -270,7 +270,7 @@ export const dictionaries = {
     "team.priorLabel": "خبرات سابقة بقيادة المؤسسين",
     "team.credentialsNote": "Brand marks shown under each profile represent work completed by the named team member through previous companies or roles. They are not presented as direct LDU client work.",
     "contact.kicker": "تواصل",
-    "contact.title": "ابدأ بأسرع طريق.",
+    "contact.title": "لنصنع القفزة الثقافية.",
     "contact.body": "إذا لديك مشروع قائم، اتصل أو راسل LDU مباشرة. جعلنا الوصول إلى قنوات التواصل بنقرة واحدة.",
     "contact.locationLabel": "الشركة",
     "contact.location": "LDU, LLC · الرياض، المملكة العربية السعودية",
