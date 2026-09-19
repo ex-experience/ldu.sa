@@ -18,7 +18,7 @@ export function I18nProvider({ children }) {
 
     const dict = dictionaries[lang] || dictionaries.en;
     const suffix = dict["hero.meta"] || dictionaries.en["hero.meta"];
-    document.title = `LDU — ${suffix}`;
+    document.title = `LDU ${suffix}`;
   }, [lang]);
 
   const value = useMemo(() => {

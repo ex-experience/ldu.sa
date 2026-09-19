@@ -15,7 +15,7 @@ const copy = {
     kicker: "LIVE EXPERIENCE / SELECTED EVENT IMAGERY",
     title: "Real rooms. Real people. The feeling sells first.",
     body:
-      "A concentrated edit of live-event imagery already held in the LDU repository — kept separate from founder case studies so the attribution stays clear.",
+      "A concentrated edit of live-event imagery already held in the LDU repository, kept separate from founder case studies so the attribution stays clear.",
     cue: "Swipe the live frames",
     frame: "LIVE EXPERIENCE"
   },
